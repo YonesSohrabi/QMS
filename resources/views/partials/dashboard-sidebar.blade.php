@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="../../index3.html" class="brand-link">
+    <a href="{{ route('dashboard') }}" class="brand-link">
         <img
             src="{{ asset('templete/dist/img/AdminLTELogo.png') }}"
             alt="AdminLTE Logo"
@@ -37,34 +37,13 @@
                 >
                     <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="nav-icon fa fa-dashboard"></i>
                             <p>
                                 داشبوردها
-                                <i class="right fa fa-angle-left"></i>
                             </p>
                         </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../../index.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>داشبورد اول</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../../index2.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>داشبورد دوم</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../../index3.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>داشبورد سوم</p>
-                                </a>
-                            </li>
-                        </ul>
                     </li>
                     <li class="nav-item">
                         <a href="../widgets.html" class="nav-link">
@@ -85,7 +64,7 @@
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="../tables/simple.html" class="nav-link active">
+                                <a href="{{ route('users.index') }}" class="nav-link active">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>همه کاربران</p>
                                 </a>

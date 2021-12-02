@@ -10,52 +10,45 @@
         لطفا برای ثبت نام اولیه فرم زیر را پر کنید.
     </x-slot>
 
-    <form action="" method="post">
+    <form action="{{ route('register.store') }}" method="post">
+        @csrf
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="نام">
+            <input type="text" name="name" class="form-control" placeholder="نام">
             <div class="input-group-append">
                 <span class="fa fa-user input-group-text"></span>
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="نام خانوادگی">
+            <input type="text" name="family" class="form-control" placeholder="نام خانوادگی">
             <div class="input-group-append">
                 <span class="fa fa-user input-group-text"></span>
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="ایمیل">
+            <input type="text" name="email" class="form-control" placeholder="ایمیل">
             <div class="input-group-append">
                 <span class="fa fa-envelope input-group-text"></span>
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="کد ملی">
+            <input type="text" name="nati_code" class="form-control" placeholder="کد ملی">
             <div class="input-group-append">
                 <span class="fa fa-life-ring input-group-text"></span>
             </div>
         </div>
 
         <div class="form-group">
-            <select class="form-control">
-                <option>عنوان کاربری خود را مشخص کنید</option>
-                <option>استاد</option>
-                <option>دانشجو</option>
+            <select class="form-control" name="role">
+                <option value="">عنوان کاربری خود را مشخص کنید</option>
+                <option value="teacher">استاد</option>
+                <option value="student">دانشجو</option>
             </select>
         </div>
 
         <div class="row">
-            <div class="col-8 my-2">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox"> با <a class="text-secondary" href="#">شرایط</a> موافق هستم
-                    </label>
-                </div>
-            </div>
-            <!-- /.col -->
-            <a href="#" class="btn btn-block btn-primary">
+            <button class="btn btn-block btn-primary">
                 ثبت نام
-            </a>
+            </button>
         </div>
     </form>
 
@@ -63,15 +56,4 @@
         <a href="" class="text-center text-muted">من قبلا ثبت نام کرده ام</a>
     </div>
 
-    <x-slot name="script">
-        <script>
-            $(function () {
-                $('input').iCheck({
-                    checkboxClass: 'icheckbox_square-blue',
-                    radioClass   : 'iradio_square-blue',
-                    increaseArea : '20%' // optional
-                })
-            })
-        </script>
-    </x-slot>
 </x-auth-layout>

@@ -3,5 +3,5 @@
         داشبورد
     </x-slot>
 
-    بیب
+
 </x-dashboard-layout>
