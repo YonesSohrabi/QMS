@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -9,7 +10,8 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('pages.dashboard.users');
+        $users = User::where('status','!=',2)->get();
+        return view('pages.dashboard.users',compact('users'));
     }
 
 
@@ -21,7 +23,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //
+
     }
 
 
@@ -37,14 +39,17 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(User $user)
     {
-        //
+
     }
 
-
-    public function destroy($id)
+    public function setStatus(User $user,int $status)
     {
-        //
+        $user->update([
+            'status' => $status,
+        ]);
+        return back();
     }
+
 }

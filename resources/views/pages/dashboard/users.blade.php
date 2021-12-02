@@ -110,45 +110,61 @@
                                     <th>نقش</th>
                                     <th>عملیات</th>
                                 </tr>
+                                @foreach($users as $user)
                                 <tr>
-                                    <td>183</td>
-                                    <td>یونس سهرابی</td>
-                                    <td>4000348795</td>
-                                    <td>1400/03/09</td>
-                                    <td>y.sohrabi959@gmail.com</td>
+                                    <td>{{ $user->id }}</td>
+                                    <td>{{ $user->name .' '. $user->family }}</td>
+                                    <td>{{ $user->nati_code }}</td>
+                                    <td>{{ $user->getCreateAtInJalali() }}</td>
+                                    <td>{{ $user->email }}</td>
                                     <td>
-                                        <span class="badge badge-success">استاد</span>
+                                        <span class="badge @if($user->status) badge-success @else badge-warning @endif">{{ $user->getRole() }}</span>
                                     </td>
                                     <td>
+                                        @if($user->status === 0)
                                         <button
                                             type="button"
                                             class="btn text-success"
                                             data-toggle="tooltip"
-                                            title="حذف"
+                                            title="تائید"
                                             data-widget="chat-pane-toggle"
+                                            onclick="$('#confirm-user-{{$user->id}}').submit()"
                                         >
                                             <i class="fa fa-check"></i>
                                         </button>
+                                        @endif
                                         <button
                                             type="button"
                                             class="btn"
                                             data-toggle="tooltip"
-                                            title="حذف"
+                                            title="نمایش جزئیات"
                                             data-widget="chat-pane-toggle"
                                         >
                                             <i class="fa fa-eye"></i>
                                         </button>
+                                        @if($user->status === 0)
                                         <button
                                             type="button"
                                             class="btn text-danger"
                                             data-toggle="tooltip"
-                                            title="حذف"
+                                            title="رد"
                                             data-widget="chat-pane-toggle"
+                                            onclick="$('#reject-user-{{$user->id}}').submit()"
                                         >
-                                            <i class="fa fa-trash"></i>
+                                            <i class="fa fa-close"></i>
                                         </button>
+                                        @endif
                                     </td>
+                                    <form action="{{ route('users.status', [$user->id,1]) }}" method="post" id="confirm-user-{{$user->id}}">
+                                        @csrf
+                                        @method('put')
+                                    </form>
+                                    <form action="{{ route('users.status', [$user->id,2]) }}" method="post" id="reject-user-{{$user->id}}">
+                                        @csrf
+                                        @method('put')
+                                    </form>
                                 </tr>
+                                @endforeach
                             </table>
                         </div>
                         <!-- /.card-body -->

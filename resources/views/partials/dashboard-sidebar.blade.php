@@ -23,7 +23,7 @@
                     />
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">یونس سهرابی</a>
+                    <a href="#" class="d-block">{{ auth()->user()->name .' '. auth()->user()->family }}</a>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
                         <a href="{{ route('dashboard') }}" class="nav-link">
                             <i class="nav-icon fa fa-dashboard"></i>
                             <p>
-                                داشبوردها
+                                داشبورد
                             </p>
                         </a>
                     </li>
@@ -77,6 +77,31 @@
                             </li>
                         </ul>
                     </li>
+
+                    <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-table"></i>
+                            <p>
+                                مدیریت دوره ها
+                                <i class="fa fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{ route('users.index') }}" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>لیست دوره ها</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../tables/data.html" class="nav-link">
+                                    <i class="fa fa-circle-o nav-icon"></i>
+                                    <p>اضافه کردن کاربر</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="nav-header">مثال‌ها</li>
                     <li class="nav-item">
                         <a href="../calendar.html" class="nav-link">
@@ -123,6 +148,17 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fa fa-circle-o text-info"></i>
                             <p>اطلاعات</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{{ route('logout') }}" method="post" id="logout-form">
+                            @csrf
+                        </form>
+                        <a href="" class="nav-link" onclick="event.preventDefault();document.getElementById('logout-form').submit()">
+                            <i class="nav-icon fa fa-sign-out"></i>
+                            <p>
+                                خروج
+                            </p>
                         </a>
                     </li>
                 </ul>

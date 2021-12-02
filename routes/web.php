@@ -21,5 +21,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::resource('/users',UserController::class);
+Route::resource('/users',UserController::class)
+    ->except('destroy','show');
+Route::put('users/{user}/statusUpdate/{status}',[UserController::class, 'setStatus'])
+    ->name('users.status');
+
 require __DIR__.'/auth.php';

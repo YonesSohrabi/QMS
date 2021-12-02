@@ -24,6 +24,7 @@ class User extends Authenticatable
         'nati_code',
         'role',
         'password',
+        'status',
     ];
 
     /**
@@ -44,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getRole(){
+        if ($this->role === 'student') return 'دانشجو';
+        if ($this->role === 'teacher') return 'استاد';
+        if ($this->role === 'admin') return 'ادمین';
+    }
+
+    public function getCreateAtInJalali(){
+        return verta($this->created_at)->format('Y/m/d');
+    }
 }
