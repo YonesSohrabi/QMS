@@ -22,9 +22,11 @@ class RegisterRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'family' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'nati_code' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['nullable', 'numeric','unique:users,phone'],
+            'nati_code' => ['required', 'numeric','unique:users,nati_code'],
             'role' => ['required'],
+            'password' => ['nullable', 'string', 'max:255'],
         ];
     }
 }

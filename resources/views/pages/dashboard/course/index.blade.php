@@ -66,9 +66,9 @@
 
                                     </div>
                                     <div class="col-5">
-                                        <form class="form-inline ml-3">
+                                        <form action="{{ route('courses.index') }}" method="get" class="form-inline ml-3">
                                             <div class="input-group input-group-sm" style="width: 300px;">
-                                                <input type="text" name="table_search" class="form-control float-right" placeholder="دوره مورد نظر را وارد کنید ... ">
+                                                <input type="text" name="search" class="form-control float-right" placeholder="کدملی کاربر مورد نظر را وارد کنید ... ">
 
                                                 <div class="input-group-append">
                                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>

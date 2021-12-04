@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('nati_code')->unique();
             $table->string('role');
             $table->string('password')->nullable();
-            $table->tinyInteger('status')->default(0);
+            $table->char('status')->default('q');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken()->nullable();
             $table->timestamps();

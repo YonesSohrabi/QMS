@@ -66,11 +66,11 @@
                             <li class="nav-item">
                                 <a href="{{ route('users.index') }}" class="nav-link active">
                                     <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>همه کاربران</p>
+                                    <p>لیست کاربران</p>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="../tables/data.html" class="nav-link">
+                                <a href="{{ route('users.create') }}" class="nav-link">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>اضافه کردن کاربر</p>
                                 </a>

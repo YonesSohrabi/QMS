@@ -49,30 +49,30 @@
                                 <div class="row d-flex justify-content-between">
                                     <div class="col-7 d-flex justify-content-between">
                                         <div>
-                                            <a href="#" class="btn btn-block btn-success">
+                                            <a href="{{ route('users.index',['status' => 'a']) }}" class="btn btn-block btn-success">
                                                 کاربران تائید شده
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" class="btn btn-block btn-warning">
+                                            <a href="{{ route('users.index',['status' => 'q']) }}" class="btn btn-block btn-warning">
                                                 کاربران در انتظار تائید
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" class="btn btn-block btn-outline-primary">
+                                            <a href="{{ route('users.index',['role' => 'teacher']) }}" class="btn btn-block btn-outline-primary">
                                                 استاد
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" class="btn btn-block btn-outline-info">
+                                            <a href="{{ route('users.index',['role' => 'student']) }}" class="btn btn-block btn-outline-info">
                                                 دانشجو
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-5">
-                                        <form class="form-inline ml-3">
+                                        <form action="{{ route('users.index') }}" method="get"  class="form-inline ml-3">
                                             <div class="input-group input-group-sm" style="width: 300px;">
-                                                <input type="text" name="table_search" class="form-control float-right" placeholder="نام کاربر را وارد کنید ... ">
+                                                <input type="text" name="search" class="form-control float-right" placeholder="نام کاربر را وارد کنید ... ">
 
                                                 <div class="input-group-append">
                                                     <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -95,7 +95,12 @@
                             <h3 class="card-title">لیست کاربران</h3>
 
                             <div class="card-tools">
-
+                                <a href="{{ route('users.create') }}">
+                                    <button type="button" class="btn btn-outline-primary float-right">
+                                        <i class="fa fa-plus"></i>
+                                        اضافه کردن کاربر
+                                    </button>
+                                </a>
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -118,10 +123,11 @@
                                     <td>{{ $user->getCreateAtInJalali() }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
-                                        <span class="badge @if($user->status) badge-success @else badge-warning @endif">{{ $user->getRole() }}</span>
+                                        <!-- a => approved | q => Queue | r => reject -->
+                                        <span class="badge @if($user->status==='a') badge-success @else badge-warning @endif">{{ $user->getRole() }}</span>
                                     </td>
                                     <td>
-                                        @if($user->status === 0)
+                                        @if($user->status === 'q')
                                         <button
                                             type="button"
                                             class="btn text-success"
@@ -142,7 +148,7 @@
                                         >
                                             <i class="fa fa-eye"></i>
                                         </button>
-                                        @if($user->status === 0)
+                                        @if($user->status === 'q')
                                         <button
                                             type="button"
                                             class="btn text-danger"
@@ -154,15 +160,35 @@
                                             <i class="fa fa-close"></i>
                                         </button>
                                         @endif
+                                        @if($user->status === 'a')
+                                            <a href="{{ route('users.edit', $user->id) }}">
+                                                <button
+                                                    type="button"
+                                                    class="btn text-dark"
+                                                    data-toggle="tooltip"
+                                                    title="ویرایش"
+                                                    data-widget="chat-pane-toggle"
+                                                >
+                                                    <i class="fa fa-edit"></i>
+                                                </button>
+                                            </a>
+                                        @endif
                                     </td>
-                                    <form action="{{ route('users.status', [$user->id,1]) }}" method="post" id="confirm-user-{{$user->id}}">
-                                        @csrf
-                                        @method('put')
-                                    </form>
-                                    <form action="{{ route('users.status', [$user->id,2]) }}" method="post" id="reject-user-{{$user->id}}">
-                                        @csrf
-                                        @method('put')
-                                    </form>
+
+                                    @if($user->status === 'q')
+                                        <form action="{{ route('users.status', [$user->id,'a']) }}" method="post" id="confirm-user-{{$user->id}}">
+                                            @csrf
+                                            @method('put')
+                                        </form>
+                                        <form action="{{ route('users.status', [$user->id,'r']) }}" method="post" id="reject-user-{{$user->id}}">
+                                            @csrf
+                                            @method('put')
+                                        </form>
+                                    @endif
+                                    @if($user->status === 'a')
+                                        <form action="{{ route('users.edit', $user->id) }}" id="edit-user-{{$user->id}}">
+                                        </form>
+                                    @endif
                                 </tr>
                                 @endforeach
                             </table>
