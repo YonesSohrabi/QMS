@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,11 +20,14 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 Route::resource('/users',UserController::class)
     ->except('destroy','show');
 Route::put('users/{user}/statusUpdate/{status}',[UserController::class, 'setStatus'])
     ->name('users.status');
+
+Route::resource('/courses',CourseController::class)
+    ->except('show');
 
 require __DIR__.'/auth.php';
