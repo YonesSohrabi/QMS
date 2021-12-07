@@ -49,17 +49,17 @@
                                 <div class="row d-flex justify-content-between">
                                     <div class="col-7 d-flex justify-content-between">
                                         <div>
-                                            <a href="#" class="btn btn-block btn-success">
+                                            <a href="{{ route('courses.index', ['status' => 's']) }}" class="btn btn-block btn-success">
                                                 دوره های در حال برگزاری
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" class="btn btn-block btn-warning">
+                                            <a href="{{ route('courses.index', ['status' => 'p']) }}" class="btn btn-block btn-warning">
                                                 دوره های شروع نشده
                                             </a>
                                         </div>
                                         <div>
-                                            <a href="#" class="btn btn-block btn-danger">
+                                            <a href="{{ route('courses.index', ['status' => 'e']) }}" class="btn btn-block btn-danger">
                                                 دوره های تموم شده
                                             </a>
                                         </div>
@@ -120,8 +120,10 @@
                                         <td>{{ $course->getStartAtInJalali() }}</td>
                                         <td>{{ $course->getEndAtInJalali() }}</td>
                                         <td>
-                                            <span class="badge @if($course->status === 0) badge-warning
-                                                @elseif($course->status === 1) badge-success @else badge-warning @endif">{{ $course->getStatus() }}
+                                            <span class="badge @if($course->status === 'p') badge-warning
+                                                @elseif($course->status === 's') badge-success
+                                                @else badge-warning
+                                                @endif">{{ $course->getStatus() }}
                                             </span>
                                         </td>
                                         <td>
@@ -137,15 +139,17 @@
                                                     <i class="fa fa-check"></i>
                                                 </button>
                                             @endif
-                                            <button
-                                                type="button"
-                                                class="btn"
-                                                data-toggle="tooltip"
-                                                title="نمایش جزئیات"
-                                                data-widget="chat-pane-toggle"
-                                            >
-                                                <i class="fa fa-eye"></i>
-                                            </button>
+                                            <a href="{{ route('courses.show',$course->id) }}">
+                                                <button
+                                                    type="button"
+                                                    class="btn"
+                                                    data-toggle="tooltip"
+                                                    title="نمایش جزئیات"
+                                                    data-widget="chat-pane-toggle"
+                                                >
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
+                                            </a>
                                             @if($course->status === 5)
                                                 <button
                                                     type="button"

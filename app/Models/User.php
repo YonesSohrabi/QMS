@@ -47,6 +47,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+//    protected $with = [
+//        'courses'
+//    ];
+
+    public function courses(){
+        return $this->belongsToMany(Course::class);
+    }
+
     public function getRole(){
         if ($this->role === 'student') return 'دانشجو';
         if ($this->role === 'teacher') return 'استاد';

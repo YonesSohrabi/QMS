@@ -16,10 +16,18 @@ class Course extends Model
         'end_at',
     ];
 
+//    protected $with = [
+//        'users'
+//    ];
+
+    public function users(){
+        return $this->belongsToMany(User::class);
+    }
+
     public function getStatus(){
-        if ($this->status === 0) return 'شروع نشده';
-        if ($this->status === 1) return 'در حال برگزاری';
-        if ($this->status === 2) return 'اتمام دوره';
+        if ($this->status === 'p') return 'شروع نشده';
+        if ($this->status === 's') return 'در حال برگزاری';
+        if ($this->status === 'e') return 'اتمام دوره';
     }
 
     public function getTeacger() {

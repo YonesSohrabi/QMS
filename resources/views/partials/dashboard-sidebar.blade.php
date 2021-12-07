@@ -37,8 +37,8 @@
                 >
                     <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                    <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link">
+                    <li class="nav-item @if(request()->is('dashboard')) menu-open @endif">
+                        <a href="{{ route('dashboard') }}" class="nav-link @if(request()->is('dashboard')) active @endif">
                             <i class="nav-icon fa fa-dashboard"></i>
                             <p>
                                 داشبورد
@@ -54,8 +54,8 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview menu-open">
-                        <a href="#" class="nav-link active">
+                    <li class="nav-item has-treeview @if(request()->is('users/*') || request()->is('users')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('users/*') || request()->is('users')) active @endif">
                             <i class="nav-icon fa fa-table"></i>
                             <p>
                                 مدیریت کاربران
@@ -63,14 +63,14 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('users.index') }}" class="nav-link active">
+                            <li class="nav-item @if(request()->is('users')) menu-open @endif">
+                                <a href="{{ route('users.index') }}" class="nav-link @if(request()->is('users')) active @endif">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست کاربران</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('users.create') }}" class="nav-link">
+                            <li class="nav-item @if(request()->is('users/*')) menu-open @endif">
+                                <a href="{{ route('users.create') }}" class="nav-link @if(request()->is('users/create')) active @endif">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>اضافه کردن کاربر</p>
                                 </a>
@@ -78,8 +78,8 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
+                    <li class="nav-item has-treeview @if(request()->is('courses/*') || request()->is('courses')) menu-open @endif">
+                        <a href="#" class="nav-link @if(request()->is('courses/*') || request()->is('courses')) active @endif">
                             <i class="nav-icon fa fa-table"></i>
                             <p>
                                 مدیریت دوره ها
@@ -87,14 +87,14 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="{{ route('courses.index') }}" class="nav-link">
+                            <li class="nav-item @if(request()->is('courses')) menu-open @endif">
+                                <a href="{{ route('courses.index') }}" class="nav-link @if(request()->is('courses')) active @endif">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>لیست دوره ها</p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ route('courses.create') }}" class="nav-link">
+                            <li class="nav-item @if(request()->is('courses/create')) menu-open @endif">
+                                <a href="{{ route('courses.create') }}" class="nav-link @if(request()->is('courses/create')) active @endif">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>اضافه کردن دوره</p>
                                 </a>

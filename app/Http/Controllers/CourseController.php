@@ -4,16 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
+use App\Models\User;
+use App\Models\UserCourse;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 
 class CourseController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all();
+        if ($request->search)
+            $courses = Course::where('name','LIKE',"%{$request->search}%")->get();
+        if ($request->status)
+            $courses = Course::where('status','LIKE',"%{$request->status}%")->get();
+        if(!$request->status && !$request->search)
+            $courses = Course::all();
         return view('pages.dashboard.course.index',compact('courses'));
     }
 
@@ -32,9 +40,13 @@ class CourseController extends Controller
         $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
 
         $course = Course::create($data);
-        return back();
+        return redirect()->route('courses.index');
     }
 
+    public function show(Course $course)
+    {
+        return view('pages.dashboard.course.show');
+    }
 
     public function edit(Course $course)
     {
@@ -50,4 +62,23 @@ class CourseController extends Controller
     {
         //
     }
+
+    public function studentList($id)
+    {
+        $users = User::all();
+        $usersIC = Course::find($id)->users;
+
+        return view('pages.dashboard.course.students', compact('usersIC', ['users','id']));
+    }
+
+    public function addUserToCourse(Request $request,$id){
+
+        foreach ($request->get('name') as $userID){
+            Course::find($id)->users()->attach($userID);
+        }
+
+        dd($request->all());
+    }
+
+
 }

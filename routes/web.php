@@ -22,12 +22,21 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::resource('/users',UserController::class)
-    ->except('destroy','show');
-Route::put('users/{user}/statusUpdate/{status}',[UserController::class, 'setStatus'])
-    ->name('users.status');
+Route::middleware('auth')->group(function (){
+    Route::resource('users',UserController::class)
+        ->except('destroy','show');
+    Route::put('/users/{user}/statusUpdate/{status}',[UserController::class, 'setStatus'])
+        ->name('users.status');
+});
 
-Route::resource('/courses',CourseController::class)
-    ->except('show');
+Route::middleware('auth')->group(function (){
+    Route::resource('courses',CourseController::class);
+    Route::get('courses/{id}/students',[CourseController::class,'studentList'])
+        ->name('courses.studentList');
+    Route::post('courses/{id}/students',[CourseController::class,'addUserToCourse'])
+        ->name('courses.addUser');
+});
+
+
 
 require __DIR__.'/auth.php';
