@@ -181,27 +181,23 @@
                                                 data-toggle="tooltip"
                                                 title="رد"
                                                 data-widget="chat-pane-toggle"
-                                                onclick="$('#reject-user-{{$user->id}}').submit()"
+                                                onclick="$('#delete-user-{{$user->id}}').submit()"
                                             >
                                                 <i class="fa fa-trash"></i>
                                             </button>
 
                                         </td>
 
-                                        @if($user->status === 'q')
-                                            <form action="{{ route('users.status', [$user->id,'a']) }}" method="post" id="confirm-user-{{$user->id}}">
+
+{{--                                            <form action="{{ route('users.status', [$user->id,'a']) }}" method="post" id="confirm-user-{{$user->id}}">--}}
+{{--                                                @csrf--}}
+{{--                                                @method('put')--}}
+{{--                                            </form>--}}
+                                            <form action="{{ route('courses.deleteUser', [ 'user_id' => $user->id , 'id' => $id]) }}" method="post" id="delete-user-{{$user->id}}">
                                                 @csrf
                                                 @method('put')
                                             </form>
-                                            <form action="{{ route('users.status', [$user->id,'r']) }}" method="post" id="reject-user-{{$user->id}}">
-                                                @csrf
-                                                @method('put')
-                                            </form>
-                                        @endif
-                                        @if($user->status === 'a')
-                                            <form action="{{ route('users.edit', $user->id) }}" id="edit-user-{{$user->id}}">
-                                            </form>
-                                        @endif
+
                                     </tr>
                                 @endforeach
                             </table>

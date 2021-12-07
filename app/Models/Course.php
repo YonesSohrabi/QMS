@@ -21,7 +21,16 @@ class Course extends Model
 //    ];
 
     public function users(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class)
+            ->whereNull('deleted_at')
+            ->withTimestamps()
+            ->withPivot('deleted_at');
+    }
+
+    public function usersWithTrashed(){
+        return $this->belongsToMany(User::class)
+            ->withTimestamps()
+            ->withPivot('deleted_at','role');
     }
 
     public function getStatus(){

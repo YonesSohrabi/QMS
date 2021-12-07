@@ -34,6 +34,15 @@ class LoginRequest extends FormRequest
         ];
     }
 
+    public function messages()
+    {
+        return [
+            'email.required' => 'پر کردن فیلد ایمیل ضروری می باشد',
+            'email.email' => 'ایمیل نامعتبر است',
+            'password.required' => 'پر کردن فیلد رمز عبور ضروری می باشد',
+        ];
+    }
+
     /**
      * Attempt to authenticate the request's credentials.
      *

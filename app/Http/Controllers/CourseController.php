@@ -9,6 +9,7 @@ use App\Models\UserCourse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 
 class CourseController extends Controller
@@ -72,12 +73,21 @@ class CourseController extends Controller
     }
 
     public function addUserToCourse(Request $request,$id){
-
+        $role = $request->get('role');
         foreach ($request->get('name') as $userID){
-            Course::find($id)->users()->attach($userID);
+            Course::find($id)->users()->attach($userID,['role' => $role]);
         }
+        return back();
+    }
 
-        dd($request->all());
+    public function deleteUserFromCourse($id,$user_id){
+
+        DB::table('course_user')
+            ->where('user_id', $user_id)
+            ->where('course_id', $id)
+            ->update(array('deleted_at' => DB::raw('NOW()')));
+
+        return back();
     }
 
 

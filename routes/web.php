@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function (){
         ->name('courses.studentList');
     Route::post('courses/{id}/students',[CourseController::class,'addUserToCourse'])
         ->name('courses.addUser');
+    Route::put('courses/{id}/students/{user_id}',[CourseController::class,'deleteUserFromCourse'])
+        ->name('courses.deleteUser');
 });
 
 
