@@ -45,7 +45,8 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
+                    @if(auth()->user()->role === 'admin')
+                        <li class="nav-item">
                         <a href="../widgets.html" class="nav-link">
                             <i class="nav-icon fa fa-th"></i>
                             <p>
@@ -54,30 +55,30 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item has-treeview @if(request()->is('users/*') || request()->is('users')) menu-open @endif">
-                        <a href="#" class="nav-link @if(request()->is('users/*') || request()->is('users')) active @endif">
-                            <i class="nav-icon fa fa-table"></i>
-                            <p>
-                                مدیریت کاربران
-                                <i class="fa fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item @if(request()->is('users')) menu-open @endif">
-                                <a href="{{ route('users.index') }}" class="nav-link @if(request()->is('users')) active @endif">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>لیست کاربران</p>
-                                </a>
-                            </li>
-                            <li class="nav-item @if(request()->is('users/*')) menu-open @endif">
-                                <a href="{{ route('users.create') }}" class="nav-link @if(request()->is('users/create')) active @endif">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>اضافه کردن کاربر</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
+                        <li class="nav-item has-treeview @if(request()->is('users/*') || request()->is('users')) menu-open @endif">
+                            <a href="#" class="nav-link @if(request()->is('users/*') || request()->is('users')) active @endif">
+                                <i class="nav-icon fa fa-table"></i>
+                                <p>
+                                    مدیریت کاربران
+                                    <i class="fa fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item @if(request()->is('users')) menu-open @endif">
+                                    <a href="{{ route('users.index') }}" class="nav-link @if(request()->is('users')) active @endif">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>لیست کاربران</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item @if(request()->is('users/*')) menu-open @endif">
+                                    <a href="{{ route('users.create') }}" class="nav-link @if(request()->is('users/create')) active @endif">
+                                        <i class="fa fa-circle-o nav-icon"></i>
+                                        <p>اضافه کردن کاربر</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
                     <li class="nav-item has-treeview @if(request()->is('courses/*') || request()->is('courses')) menu-open @endif">
                         <a href="#" class="nav-link @if(request()->is('courses/*') || request()->is('courses')) active @endif">
                             <i class="nav-icon fa fa-table"></i>

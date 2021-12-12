@@ -1,4 +1,3 @@
-
 <x-dashboard-layout>
     <x-slot name="title">
         داشبورد - مدیریت کاربران
@@ -14,13 +13,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>کاربران</h1>
+                        <h1>کاربران دوره {{ $course->name }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="#">داشبورد</a></li>
-                            <li class="breadcrumb-item"><a href="#">دوره ها</a></li>
-                            <li class="breadcrumb-item"><a href="#">دوره لاراول</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">داشبورد</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">دوره ها</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('courses.show',$course->id) }}">دوره {{ $course->name }}</a></li>
                             <li class="breadcrumb-item active">دانشجویان دوره</li>
                         </ol>
                     </div>
@@ -48,15 +47,16 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <form action="{{ route('courses.addUser', $id) }}" method="post">
+                                <form action="{{ route('courses.addUser', $course->id) }}" method="post">
                                     @csrf
                                     <div class="row">
                                     <div class="col-6">
                                             <div class="form-group">
                                                 <label>نام کاربر</label>
                                                 <select class="form-control select2" name="name[]"  multiple="multiple" data-placeholder="نام کاربر را وارد کنید"
-                                                        style="width: 100%;text-align: right">
+                                                        style="width: 100%;text-align: right;">
                                                     @foreach($users as $user)
+
                                                         <option value="{{ $user->id }}">
                                                             {{ $user->name .' '. $user->family }}
                                                         </option>
@@ -68,7 +68,6 @@
                                         <label>نقش <span class="text-danger"> * </span></label>
                                         <select name="role" class="form-control">
                                             <option value="">نقش کاربر را مشخص کنید</option>
-                                            <option value="admin">ادمین</option>
                                             <option value="teacher">استاد</option>
                                             <option value="student">دانشجو</option>
                                         </select>
@@ -159,10 +158,10 @@
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name .' '. $user->family }}</td>
-                                        <td>{{ $user->getCreateAtInJalali() }}</td>
+                                        <td>{{ getCreateAtInJalali($user->pivot->create_at) }}</td>
                                         <td>
                                             <!-- a => approved | q => Queue | r => reject -->
-                                            <span class="badge @if($user->role ==='teacher') badge-warning @else badge-primary @endif">{{ $user->getRole() }}</span>
+                                            <span class="badge @if($user->pivot->role ==='teacher') badge-warning @else badge-primary @endif">@if($user->pivot->role ==='teacher') {{ 'استاد' }} @else {{ 'دانشجو' }} @endif</span>
                                         </td>
                                         <td>
 
@@ -193,7 +192,7 @@
 {{--                                                @csrf--}}
 {{--                                                @method('put')--}}
 {{--                                            </form>--}}
-                                            <form action="{{ route('courses.deleteUser', [ 'user_id' => $user->id , 'id' => $id]) }}" method="post" id="delete-user-{{$user->id}}">
+                                            <form action="{{ route('courses.deleteUser', [ 'user_id' => $user->id , 'id' => $course->id]) }}" method="post" id="delete-user-{{$user->id}}">
                                                 @csrf
                                                 @method('put')
                                             </form>

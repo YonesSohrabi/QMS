@@ -31,9 +31,9 @@ Route::middleware('auth')->group(function (){
 
 Route::middleware('auth')->group(function (){
     Route::resource('courses',CourseController::class);
-    Route::get('courses/{id}/students',[CourseController::class,'studentList'])
+    Route::get('courses/{course}/students',[CourseController::class,'studentList'])
         ->name('courses.studentList');
-    Route::post('courses/{id}/students',[CourseController::class,'addUserToCourse'])
+    Route::post('courses/{course}/students',[CourseController::class,'addUserToCourse'])
         ->name('courses.addUser');
     Route::put('courses/{id}/students/{user_id}',[CourseController::class,'deleteUserFromCourse'])
         ->name('courses.deleteUser');

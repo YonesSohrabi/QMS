@@ -24,7 +24,7 @@ class Course extends Model
         return $this->belongsToMany(User::class)
             ->whereNull('deleted_at')
             ->withTimestamps()
-            ->withPivot('deleted_at');
+            ->withPivot('deleted_at','role');
     }
 
     public function usersWithTrashed(){
@@ -39,8 +39,20 @@ class Course extends Model
         if ($this->status === 'e') return 'اتمام دوره';
     }
 
-    public function getTeacger() {
-        return 0;
+    public function getTeacher() {
+        return $this->belongsToMany(User::class)
+            ->whereNull('deleted_at')
+            ->wherePivot('role','=','teacher')
+            ->withTimestamps()
+            ->withPivot(['deleted_at','role']);
+    }
+
+    public function getStudents() {
+        return $this->belongsToMany(User::class)
+            ->whereNull('deleted_at')
+            ->wherePivot('role','=','student')
+            ->withTimestamps()
+            ->withPivot(['deleted_at','role','created_at']);
     }
 
     public function getStartAtInJalali(){

@@ -10,12 +10,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">دوره لاراول (ویرایش شود)</h1>
+                        <h1 class="m-0 text-dark">دوره {{ $course->name }}</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="#">خانه</a></li>
-                            <li class="breadcrumb-item active">دوره لاراول ویرایش</li>
+                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">خانه</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">دوره ها</a></li>
+                            <li class="breadcrumb-item active">دوره {{ $course->name }}</li>
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -64,7 +65,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">تعداد دانشجویان دوره</span>
-                                <span class="info-box-number">2,000</span>
+                                <span class="info-box-number">{{ count($course->getStudents) }}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -91,19 +92,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <dl>
-                                    <dt>لیست توضیحات</dt>
-                                    <dd>لورم ایپسوم متن ساختگی</dd>
-                                    <dt>تیتیر</dt>
-                                    <dd>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است.
-                                    </dd>
-                                    <dd>لورم ایپسوم متن ساختگی.</dd>
-                                    <dt>تیتر</dt>
-                                    <dd>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                        گرافیک است.
-                                    </dd>
-                                </dl>
+                                {{ $course->description }}
                             </div>
                             <!-- ./card-body -->
                         </div>
@@ -124,18 +113,18 @@
                                 <div class="card card-widget widget-user">
                                     <!-- Add the bg color to the header using any of the bg-* classes -->
                                     <div class="widget-user-header bg-info-active">
-                                        <h3 class="widget-user-username">یونس سهرابی</h3>
+                                        <h3 class="widget-user-username">@if($teacher){{ $teacher['name'].' '.$teacher['family'] }} @else استاد تعریف نشده @endif</h3>
                                         <h5 class="widget-user-desc">استاد</h5>
                                     </div>
                                     <div class="widget-user-image">
-                                        <img class="img-circle elevation-2" src="../dist/img/user1-128x128.jpg"
+                                        <img class="img-circle elevation-2" src="{{ asset('templete/dist/img/user1-128x128.jpg') }}"
                                              alt="User Avatar">
                                     </div>
                                     <div class="card-footer">
                                         <div class="row">
                                             <div class="col-sm-6 border-left">
                                                 <div class="description-block">
-                                                    <h5 class="description-header">۳,۲۰۰</h5>
+                                                    <h5 class="description-header">{{ $teacher['coursesCount'] ?? 0}}</h5>
                                                     <span class="description-text">دوره</span>
                                                 </div>
                                                 <!-- /.description-block -->
@@ -143,7 +132,7 @@
                                             <!-- /.col -->
                                             <div class="col-sm-6">
                                                 <div class="description-block">
-                                                    <h5 class="description-header">۱۳,۰۰۰</h5>
+                                                    <h5 class="description-header">{{ $teacher['studentCount'] ?? 0}}</h5>
                                                     <span class="description-text">دانشجو</span>
                                                 </div>
                                                 <!-- /.description-block -->
@@ -175,46 +164,13 @@
                                     <!-- /.card-header -->
                                     <div class="card-body p-0">
                                         <ul class="users-list clearfix">
-                                            <li>
-                                                <img src="dist/img/user1-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">حسام موسوی</a>
-                                                <span class="users-list-date">امروز</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user8-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">ایمان</a>
-                                                <span class="users-list-date">دیروز</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user7-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">فاطمه</a>
-                                                <span class="users-list-date">۱۷ اسفند</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user6-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">جان</a>
-                                                <span class="users-list-date">۱۴ اسفند</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user2-160x160.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">محمد</a>
-                                                <span class="users-list-date">۱۲ دی</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user5-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">سارا</a>
-                                                <span class="users-list-date">۱۲ دی</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user4-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">مریم</a>
-                                                <span class="users-list-date">۱۲ دی</span>
-                                            </li>
-                                            <li>
-                                                <img src="dist/img/user3-128x128.jpg" alt="User Image">
-                                                <a class="users-list-name mt-2" href="#">نادیا</a>
-                                                <span class="users-list-date">۱۱ دی</span>
-                                            </li>
+                                            @foreach($course->getStudents as $user)
+                                                <li>
+                                                    <img src="{{ asset('templete/dist/img/user1-128x128.jpg')}}" alt="User Image">
+                                                    <a class="users-list-name mt-2" href="#">{{ $user->name .' '. $user->family }}</a>
+                                                    <span class="users-list-date">{{ $user->pivot->created_at->diffForHumans() }}</span>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                         <!-- /.users-list -->
                                     </div>
@@ -350,7 +306,7 @@
                             <span class="info-box-icon"><i class="fa fa-plus-circle"></i></span>
 
                             <div class="info-box-content">
-                                <a href="{{ route('courses.studentList',1) }}">
+                                <a href="{{ route('courses.studentList',$course->id) }}">
                                 <span class="info-box-text">استاد</span>
                                 <span class="info-box-number">اضافه کردن یا ویرایش استاد</span>
                                 </a>
@@ -362,7 +318,7 @@
                             <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
                             <div class="info-box-content">
-                                <a href="{{ route('courses.studentList',1) }}">
+                                <a href="{{ route('courses.studentList',$course->id) }}">
                                 <span class="info-box-text">دانشجویان</span>
                                 <span class="info-box-number">اضافه یا حذف کردن دانشجو</span>
                                 </a>

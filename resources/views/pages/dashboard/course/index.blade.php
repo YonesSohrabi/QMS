@@ -116,7 +116,7 @@
                                     <tr>
                                         <td>{{ $course->id }}</td>
                                         <td>{{ $course->name }}</td>
-                                        <td>{{ $course->getTeacger() }}</td>
+                                        <td>{{ getNameTeacherWithIdCourse($course->id) }}</td>
                                         <td>{{ $course->getStartAtInJalali() }}</td>
                                         <td>{{ $course->getEndAtInJalali() }}</td>
                                         <td>

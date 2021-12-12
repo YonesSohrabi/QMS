@@ -17,12 +17,14 @@ class CourseController extends Controller
 
     public function index(Request $request)
     {
+
         if ($request->search)
             $courses = Course::where('name','LIKE',"%{$request->search}%")->get();
         if ($request->status)
             $courses = Course::where('status','LIKE',"%{$request->status}%")->get();
         if(!$request->status && !$request->search)
             $courses = Course::all();
+
         return view('pages.dashboard.course.index',compact('courses'));
     }
 
@@ -46,7 +48,16 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        return view('pages.dashboard.course.show');
+        $teacher = $course->getTeacher->first();
+        if ($teacher){
+            $teacher['coursesCount'] = count(getCoursesTeacher($teacher['id']));
+            $teacher['studentCount'] = 0;
+            foreach (getCoursesTeacher($teacher['id']) as $courseID)
+                $teacher['studentCount'] += Course::find($courseID)->getStudents->count();
+        }
+
+
+        return view('pages.dashboard.course.show',compact(['course','teacher']));
     }
 
     public function edit(Course $course)
@@ -64,18 +75,20 @@ class CourseController extends Controller
         //
     }
 
-    public function studentList($id)
+    public function studentList(Course $course)
     {
         $users = User::all();
-        $usersIC = Course::find($id)->users;
-
-        return view('pages.dashboard.course.students', compact('usersIC', ['users','id']));
+        $usersIC = $course->users;
+        return view('pages.dashboard.course.students', compact('usersIC', ['users','course']));
     }
 
-    public function addUserToCourse(Request $request,$id){
-        $role = $request->get('role');
+    public function addUserToCourse(Request $request,Course $course){
+        $role = $request->role;
+        if ($role === 'teacher' && count($course->getTeacher)){
+            return back();
+        }
         foreach ($request->get('name') as $userID){
-            Course::find($id)->users()->attach($userID,['role' => $role]);
+            $course->users()->attach($userID,['role' => $role]);
         }
         return back();
     }
