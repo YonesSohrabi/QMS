@@ -91,13 +91,14 @@
                         <div class="card-header">
                             <h3 class="card-title">لیست دوره ها</h3>
                             <div class="card-tools">
+                                @if(auth()->user()->role === 'admin')
                                     <a href="{{ route('courses.create') }}">
                                         <button type="button" class="btn btn-outline-primary float-right">
                                             <i class="fa fa-plus"></i>
                                             اضافه کردن دوره
                                         </button>
                                     </a>
-
+                                @endif
                             </div>
                         </div>
                         <!-- /.card-header -->

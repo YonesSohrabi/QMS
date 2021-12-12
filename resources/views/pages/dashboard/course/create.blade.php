@@ -60,7 +60,8 @@
                                     <!-- textarea -->
                                     <div class="form-group">
                                         <label>توضیحات دوره</label>
-                                        <textarea class="form-control" name="description" rows="3" placeholder="توضیحات مربوط به دوره را بنویسید ..."></textarea>
+                                        <textarea class="form-control ck-content" id="editor" name="description"
+                                                  placeholder="توضیحات مربوط به دوره را بنویسید ..."></textarea>
                                     </div>
 
 
@@ -118,9 +119,17 @@
         <script src="{{ asset('templete/dist/js/persian-datepicker.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('templete/dist/js/adminlte.min.js') }}"></script>
+        <script src="{{ asset('templete/plugins/ckeditor/ckeditor.js') }}"></script>
 
 
         <script>
+            ClassicEditor
+                .create( document.querySelector( '#editor' ),{
+                    language: 'fa'
+                } )
+                .catch( error => {
+                    console.error( error );
+                } );
             $(function () {
 
                 //Datemask dd/mm/yyyy

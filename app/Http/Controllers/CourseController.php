@@ -9,6 +9,7 @@ use App\Models\UserCourse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
@@ -23,7 +24,9 @@ class CourseController extends Controller
         if ($request->status)
             $courses = Course::where('status','LIKE',"%{$request->status}%")->get();
         if(!$request->status && !$request->search)
-            $courses = Course::all();
+            $courses = Auth::user()->role !== "admin"
+                            ? Auth::user()->courses
+                            : Course::all();
 
         return view('pages.dashboard.course.index',compact('courses'));
     }
@@ -41,7 +44,7 @@ class CourseController extends Controller
 
         $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
         $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
-
+        dd($data['start_at']);
         $course = Course::create($data);
         return redirect()->route('courses.index');
     }

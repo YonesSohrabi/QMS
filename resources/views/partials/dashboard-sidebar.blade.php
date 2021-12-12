@@ -94,12 +94,14 @@
                                     <p>لیست دوره ها</p>
                                 </a>
                             </li>
+                            @if(auth()->user()->role === 'admin')
                             <li class="nav-item @if(request()->is('courses/create')) menu-open @endif">
                                 <a href="{{ route('courses.create') }}" class="nav-link @if(request()->is('courses/create')) active @endif">
                                     <i class="fa fa-circle-o nav-icon"></i>
                                     <p>اضافه کردن دوره</p>
                                 </a>
                             </li>
+                            @endif
                         </ul>
                     </li>
 

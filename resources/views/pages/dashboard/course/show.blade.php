@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="info-box">
-                            <span class="info-box-icon bg-info elevation-1"><i class="fa fa-gear"></i></span>
+                            <span class="info-box-icon bg-success elevation-1"><i class="fa fa-book"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">آزمون های برگزار شده</span>
@@ -44,7 +44,7 @@
                     <!-- /.col -->
                     <div class="col-12 col-sm-6 col-md-4">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-google-plus"></i></span>
+                            <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-arrows-v"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">میانگین نمرات آزمون ها</span>
@@ -92,7 +92,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                {{ $course->description }}
+                                {!! $course->description !!}
                             </div>
                             <!-- ./card-body -->
                         </div>
@@ -176,7 +176,7 @@
                                     </div>
                                     <!-- /.card-body -->
                                     <div class="card-footer text-center">
-                                        <a href="#"> همه دانشجویان این دوره</a>
+                                        <a href="{{ route('courses.studentList',$course->id) }}"> همه دانشجویان این دوره</a>
                                     </div>
                                     <!-- /.card-footer -->
                                 </div>
@@ -301,59 +301,77 @@
                     <!-- /.col -->
 
                     <div class="col-md-4">
+                        @if(auth()->user()->role === 'admin')
                         <!-- Info Boxes Style 2 -->
-                        <div class="info-box mb-3 bg-warning">
-                            <span class="info-box-icon"><i class="fa fa-plus-circle"></i></span>
+                            <div class="info-box mb-3 bg-warning">
+                                <span class="info-box-icon"><i class="fa fa-plus-circle"></i></span>
 
-                            <div class="info-box-content">
-                                <a href="{{ route('courses.studentList',$course->id) }}">
-                                <span class="info-box-text">استاد</span>
-                                <span class="info-box-number">اضافه کردن یا ویرایش استاد</span>
-                                </a>
+                                <div class="info-box-content">
+                                    <a href="{{ route('courses.studentList',$course->id) }}">
+                                    <span class="info-box-number">استاد</span>
+                                    <span class="info-box-text">اضافه کردن یا ویرایش استاد</span>
+                                    </a>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box mb-3 bg-success">
-                            <span class="info-box-icon"><i class="fa fa-user"></i></span>
+                            <!-- /.info-box -->
+                            <div class="info-box mb-3 bg-success">
+                                <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
-                            <div class="info-box-content">
-                                <a href="{{ route('courses.studentList',$course->id) }}">
-                                <span class="info-box-text">دانشجویان</span>
-                                <span class="info-box-number">اضافه یا حذف کردن دانشجو</span>
-                                </a>
+                                <div class="info-box-content">
+                                    <a href="{{ route('courses.studentList',$course->id) }}">
+                                    <span class="info-box-number">دانشجویان</span>
+                                    <span class="info-box-text">اضافه یا حذف کردن دانشجو</span>
+                                    </a>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
-                        <div class="info-box mb-3 bg-danger">
-                            <span class="info-box-icon"><i class="fa fa-newspaper-o"></i></span>
+                            <!-- /.info-box -->
+                            <div class="info-box mb-3 bg-info">
+                                <span class="info-box-icon">
+                                    <i class="fa fa-edit"></i>
+                                </span>
 
-                            <div class="info-box-content">
-                                <a href="">
-                                <span class="info-box-text">اطلاعیه</span>
-                                <span class="info-box-number">مدیریت اطلاعیه های دوره</span>
-                                </a>
+                                <div class="info-box-content">
+                                    <a href="">
+                                        <span class="info-box-number">ویرایش دوره</span>
+                                        <span class="info-box-text">ویرایش اطلاعات دوره</span>
+                                    </a>
+                                </div>
+
+                                <!-- /.info-box-content -->
                             </div>
-                            <!-- /.info-box-content -->
-                        </div>
-                        <!-- /.info-box -->
+                            <!-- /.info-box -->
+                        @endif
 
-                        <div class="info-box mb-3 bg-info" onclick="">
-                            <span class="info-box-icon">
-                                <i class="fa fa-edit"></i>
-                            </span>
+                        @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher' )
+                            <div class="info-box mb-3 bg-danger">
+                                <span class="info-box-icon"><i class="fa fa-newspaper-o"></i></span>
 
-                            <div class="info-box-content">
-                                <a href="">
-                                <span class="info-box-text">ویرایش دوره</span>
-                                <span class="info-box-number">ویرایش اطلاعات دوره</span>
-                                </a>
+                                <div class="info-box-content">
+                                    <a href="">
+                                    <span class="info-box-number">اطلاعیه</span>
+                                    <span class="info-box-text">مدیریت اطلاعیه های دوره</span>
+                                    </a>
+                                </div>
+                                <!-- /.info-box-content -->
                             </div>
+                        @endif
 
-                            <!-- /.info-box-content -->
-                        </div>
+                        @if(auth()->user()->role === 'teacher')
+                                <div class="info-box mb-3 bg-warning">
+                                    <span class="info-box-icon"><i class="fa fa-question text-xl"></i></span>
 
+                                    <div class="info-box-content">
+                                        <a href="{{ route('courses.studentList',$course->id) }}">
+
+                                            <span class="info-box-number">مدیریت آزمون</span>
+                                            <span class="info-box-text">ویرایش ، حذف و اضافه کردن آزمون</span>
+                                        </a>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+                        @endif
                         <div class="card card-primary card-outline direct-chat direct-chat-primary">
                             <div class="card-header">
                                 <h3 class="card-title">گفتگو کلاسی</h3>
