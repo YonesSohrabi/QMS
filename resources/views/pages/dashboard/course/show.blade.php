@@ -150,7 +150,7 @@
                                 <!-- USERS LIST -->
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">آخرین دانشجویان</h3>
+                                        <h3 class="card-title">دانشجویان</h3>
 
                                         <div class="card-tools">
                                             <button type="button" class="btn btn-tool" data-widget="collapse"><i
@@ -206,83 +206,34 @@
                                     <table class="table m-0">
                                         <thead>
                                         <tr>
-                                            <th>ای دی محصول</th>
-                                            <th>محصول</th>
+                                            <th>نام آزمون</th>
+                                            <th>تاریخ آزمون</th>
+                                            <th>زمان آزمون</th>
                                             <th>وضعیت</th>
-                                            <th>محبوبیت</th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                            <td>بازی ندای وظیفه ۱۰</td>
-                                            <td><span class="badge badge-success">ارسال شده</span></td>
+
+                                        @foreach($course->exams as $exam)
+                                            <tr>
+                                            <td>{{ $exam->title }}</td>
+                                            <td>{{ $exam->getStartAt() }}</td>
+                                            <td>{{ $exam->getTimeExam() }} دقیقه</td>
+                                            <td><span class="badge badge-success">{{ $exam->getStatus() }}</span></td>
                                             <td>
-                                                <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                    90,80,90,-70,61,-83,63
-                                                </div>
+                                                <button
+                                                    type="button"
+                                                    class="btn"
+                                                    data-toggle="tooltip"
+                                                    title="جزئیات آزمون"
+                                                    data-widget="chat-pane-toggle"
+                                                >
+                                                    <i class="fa fa-eye"></i>
+                                                </button>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                            <td>تلویزیون هوشمند سامسونگ</td>
-                                            <td><span class="badge badge-warning">در حال پردازش</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#f39c12" data-height="20">
-                                                    90,80,-90,70,61,-83,68
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                            <td>آیفون X max</td>
-                                            <td><span class="badge badge-danger">تحویل داده شده</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#f56954" data-height="20">
-                                                    90,-80,90,70,-61,83,63
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                            <td>تلویزیون هوشمند سامسونگ</td>
-                                            <td><span class="badge badge-info">در انتظار</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#00c0ef" data-height="20">
-                                                    90,80,-90,70,-61,83,63
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR1848</a></td>
-                                            <td>تلویزیون هوشمند سامسونگ</td>
-                                            <td><span class="badge badge-warning">در حال پردازش</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#f39c12" data-height="20">
-                                                    90,80,-90,70,61,-83,68
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR7429</a></td>
-                                            <td>آیفون X max</td>
-                                            <td><span class="badge badge-danger">تحویل داده شده</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#f56954" data-height="20">
-                                                    90,-80,90,70,-61,83,63
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><a href="pages/examples/invoice.html">OR9842</a></td>
-                                            <td>بازی ندای وظیفه ۱۰</td>
-                                            <td><span class="badge badge-success">ارسال شده</span></td>
-                                            <td>
-                                                <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                    90,80,90,-70,61,-83,63
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -290,9 +241,7 @@
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer clearfix">
-                                <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">سفارش جدید</a>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-secondary float-right">مشاهده همه
-                                    سفار</a>
+                                <a href="" class="btn btn-sm btn-secondary float-right">مشاهده همه آزمون ها</a>
                             </div>
                             <!-- /.card-footer -->
                         </div>
@@ -303,25 +252,13 @@
                     <div class="col-md-4">
                         @if(auth()->user()->role === 'admin')
                         <!-- Info Boxes Style 2 -->
-                            <div class="info-box mb-3 bg-warning">
-                                <span class="info-box-icon"><i class="fa fa-plus-circle"></i></span>
-
-                                <div class="info-box-content">
-                                    <a href="{{ route('courses.studentList',$course->id) }}">
-                                    <span class="info-box-number">استاد</span>
-                                    <span class="info-box-text">اضافه کردن یا ویرایش استاد</span>
-                                    </a>
-                                </div>
-                                <!-- /.info-box-content -->
-                            </div>
-                            <!-- /.info-box -->
                             <div class="info-box mb-3 bg-success">
                                 <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
                                 <div class="info-box-content">
                                     <a href="{{ route('courses.studentList',$course->id) }}">
-                                    <span class="info-box-number">دانشجویان</span>
-                                    <span class="info-box-text">اضافه یا حذف کردن دانشجو</span>
+                                    <span class="info-box-number">افراد</span>
+                                    <span class="info-box-text">اضافه یا حذف کردن افراد به دوره</span>
                                     </a>
                                 </div>
                                 <!-- /.info-box-content -->

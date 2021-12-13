@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CourseRequest;
 use App\Models\Course;
+use App\Models\Exam;
 use App\Models\User;
 use App\Models\UserCourse;
 use Carbon\Carbon;
@@ -44,7 +45,7 @@ class CourseController extends Controller
 
         $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
         $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
-        dd($data['start_at']);
+
         $course = Course::create($data);
         return redirect()->route('courses.index');
     }

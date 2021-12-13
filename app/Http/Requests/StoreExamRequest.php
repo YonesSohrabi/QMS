@@ -13,7 +13,7 @@ class StoreExamRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class StoreExamRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:511'],
+            'course_id' => ['required'],
+            'start_at' => ['required_with:end_at|string'],
+            'end_at' => ['required_with:start_at|gt:start_at|string'],
         ];
     }
 }

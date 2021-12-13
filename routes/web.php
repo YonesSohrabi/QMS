@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ExamController;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CourseController;
@@ -37,7 +39,12 @@ Route::middleware('auth')->group(function (){
         ->name('courses.addUser');
     Route::put('courses/{id}/students/{user_id}',[CourseController::class,'deleteUserFromCourse'])
         ->name('courses.deleteUser');
+    Route::get('courses/{course}/exams/create',[ExamController::class,'create'])
+        ->name('courses.createExam');
+    Route::post('courses/{course}/exams/create',[ExamController::class,'store'])
+        ->name('courses.storeExam');
 });
+
 
 
 

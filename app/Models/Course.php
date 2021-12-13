@@ -55,6 +55,11 @@ class Course extends Model
             ->withPivot(['deleted_at','role','created_at']);
     }
 
+    public function exams()
+    {
+        return $this->hasMany(Exam::class);
+    }
+
     public function getStartAtInJalali(){
         return verta($this->start_at)->format('Y/m/d');
     }
