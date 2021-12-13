@@ -13,7 +13,7 @@ class UpdateExamRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class UpdateExamRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string', 'max:511'],
+            'start_at' => ['required_with:end_at|string'],
+            'end_at' => ['required_with:start_at|gt:start_at|string'],
         ];
     }
 }

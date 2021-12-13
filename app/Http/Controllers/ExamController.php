@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class ExamController extends Controller
 {
 
-    public function index()
+    public function index(Exam $exam)
     {
-        //
+
     }
 
 
@@ -30,7 +30,7 @@ class ExamController extends Controller
         $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
         $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
         Exam::create($data);
-        return redirect()->route('courses.index');
+        return redirect()->route('courses.show',$data['course_id']);
     }
 
 
@@ -42,18 +42,28 @@ class ExamController extends Controller
 
     public function edit(Exam $exam)
     {
-        //
+        return view('pages.dashboard.exam.edit',compact('exam'));
     }
 
 
     public function update(UpdateExamRequest $request, Exam $exam)
     {
-        //
+        $data = $request->validated();
+        $exam->update($data);
+
+        return back();
     }
 
 
-    public function destroy(Exam $exam)
+    public function destroy(Course $course,Exam $exam)
     {
-        //
+        $exam->delete();
+
+        return back();
+    }
+
+    public function examsList(Course $course)
+    {
+        return view('pages.dashboard.exam.index',compact('course'));
     }
 }

@@ -105,54 +105,55 @@
                         </ul>
                     </li>
 
-                    <li class="nav-header">مثال‌ها</li>
-                    <li class="nav-item">
-                        <a href="../calendar.html" class="nav-link">
-                            <i class="nav-icon fa fa-calendar"></i>
-                            <p>
-                                تقویم
-                                <span class="badge badge-info right">2</span>
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-envelope-o"></i>
-                            <p>
-                                ایمیل‌ باکس
-                                <i class="fa fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a href="../mailbox/mailbox.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>اینباکس</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../mailbox/compose.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>ایجاد</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../mailbox/read-mail.html" class="nav-link">
-                                    <i class="fa fa-circle-o nav-icon"></i>
-                                    <p>خواندن</p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
+{{--                    <li class="nav-header">مثال‌ها</li>--}}
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="../calendar.html" class="nav-link">--}}
+{{--                            <i class="nav-icon fa fa-calendar"></i>--}}
+{{--                            <p>--}}
+{{--                                تقویم--}}
+{{--                                <span class="badge badge-info right">2</span>--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+{{--                    <li class="nav-item has-treeview">--}}
+{{--                        <a href="#" class="nav-link">--}}
+{{--                            <i class="nav-icon fa fa-envelope-o"></i>--}}
+{{--                            <p>--}}
+{{--                                ایمیل‌ باکس--}}
+{{--                                <i class="fa fa-angle-left right"></i>--}}
+{{--                            </p>--}}
+{{--                        </a>--}}
+{{--                        <ul class="nav nav-treeview">--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="../mailbox/mailbox.html" class="nav-link">--}}
+{{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                                    <p>اینباکس</p>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="../mailbox/compose.html" class="nav-link">--}}
+{{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                                    <p>ایجاد</p>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a href="../mailbox/read-mail.html" class="nav-link">--}}
+{{--                                    <i class="fa fa-circle-o nav-icon"></i>--}}
+{{--                                    <p>خواندن</p>--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </li>--}}
 
                     <li class="nav-header">متفاوت</li>
 
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fa fa-circle-o text-info"></i>
-                            <p>اطلاعات</p>
-                        </a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="#" class="nav-link">--}}
+{{--                            <i class="nav-icon fa fa-circle-o text-info"></i>--}}
+{{--                            <p>اطلاعات</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
+
                     <li class="nav-item">
                         <form action="{{ route('logout') }}" method="post" id="logout-form">
                             @csrf

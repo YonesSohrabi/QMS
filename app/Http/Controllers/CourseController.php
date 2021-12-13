@@ -52,6 +52,8 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        $examsHeld = $course->exams()->where('start_at','<', Carbon::now())->get();
+
         $teacher = $course->getTeacher->first();
         if ($teacher){
             $teacher['coursesCount'] = count(getCoursesTeacher($teacher['id']));
@@ -61,7 +63,7 @@ class CourseController extends Controller
         }
 
 
-        return view('pages.dashboard.course.show',compact(['course','teacher']));
+        return view('pages.dashboard.course.show',compact(['course','teacher','examsHeld']));
     }
 
     public function edit(Course $course)

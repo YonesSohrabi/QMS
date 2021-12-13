@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,12 +34,6 @@ class Course extends Model
             ->withPivot('deleted_at','role');
     }
 
-    public function getStatus(){
-        if ($this->status === 'p') return 'شروع نشده';
-        if ($this->status === 's') return 'در حال برگزاری';
-        if ($this->status === 'e') return 'اتمام دوره';
-    }
-
     public function getTeacher() {
         return $this->belongsToMany(User::class)
             ->whereNull('deleted_at')
@@ -66,5 +61,12 @@ class Course extends Model
 
     public function getEndAtInJalali(){
         return verta($this->end_at)->format('Y/m/d');
+    }
+
+    public function getStatus()
+    {
+        if(Carbon::now()->gt($this->end_at)) return ['e','خاتمه یافته'];
+        if(Carbon::now()->lte($this->start_at)) return ['p','شروع نشده'];
+        return ['s','در حال برگزاری'];
     }
 }

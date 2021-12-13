@@ -39,13 +39,23 @@ Route::middleware('auth')->group(function (){
         ->name('courses.addUser');
     Route::put('courses/{id}/students/{user_id}',[CourseController::class,'deleteUserFromCourse'])
         ->name('courses.deleteUser');
+    Route::get('courses/{course}/exams',[ExamController::class,'examsList'])
+        ->name('courses.exams');
     Route::get('courses/{course}/exams/create',[ExamController::class,'create'])
         ->name('courses.createExam');
     Route::post('courses/{course}/exams/create',[ExamController::class,'store'])
         ->name('courses.storeExam');
+    Route::delete('courses/{course}/exams/{exam}',[ExamController::class,'destroy'])
+        ->name('courses.deleteExam');
 });
 
-
+Route::middleware('auth')->group(function (){
+    Route::get('exams',[ExamController::class,'index']);
+    Route::get('exams/{exam}/edit',[ExamController::class,'edit'])
+        ->name('exams.edit');
+    Route::put('exams/{exam}',[ExamController::class,'update'])
+        ->name('exams.update');
+});
 
 
 require __DIR__.'/auth.php';

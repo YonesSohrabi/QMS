@@ -22,6 +22,7 @@ class CreateExamsTable extends Migration
                 ->onDelete('CASCADE');
             $table->timestamp('start_at');
             $table->timestamp('end_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -1,6 +1,6 @@
 <x-dashboard-layout>
     <x-slot name="title">
-        داشبورد - مدیریت کاربران
+        داشبورد - مدیریت آزمون ها
     </x-slot>
 
     <x-slot name="styles">
@@ -13,14 +13,14 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>کاربران دوره {{ $course->name }}</h1>
+                        <h1> آزمون های دوره {{ $course->name }}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">داشبورد</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('courses.index') }}">دوره ها</a></li>
                             <li class="breadcrumb-item"><a href="{{ route('courses.show',$course->id) }}">دوره {{ $course->name }}</a></li>
-                            <li class="breadcrumb-item active">دانشجویان دوره</li>
+                            <li class="breadcrumb-item active">آزمون های دوره</li>
                         </ol>
                     </div>
                 </div>
@@ -34,59 +34,6 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    @if(auth()->user()->role === 'admin')
-                        <div class="col-md-12">
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title">افزودن کاربر به دوره</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                        <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-                                    </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <form action="{{ route('courses.addUser', $course->id) }}" method="post">
-                                        @csrf
-                                        <div class="row">
-                                        <div class="col-6">
-                                                <div class="form-group">
-                                                    <label>نام کاربر</label>
-                                                    <select class="form-control select2" name="name[]"  multiple="multiple" data-placeholder="نام کاربر را وارد کنید"
-                                                            style="width: 100%;text-align: right;">
-                                                        @foreach($users as $user)
-
-                                                            <option value="{{ $user->id }}">
-                                                                {{ $user->name .' '. $user->family }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label>نقش <span class="text-danger"> * </span></label>
-                                            <select name="role" class="form-control">
-                                                <option value="">نقش کاربر را مشخص کنید</option>
-                                                <option value="teacher">استاد</option>
-                                                <option value="student">دانشجو</option>
-                                            </select>
-                                        </div>
-
-                                            <button type="submit" class="btn btn-outline-primary float-right col-12">
-                                                <i class="fa fa-plus"></i>
-                                                اضافه کردن کاربر
-                                            </button>
-
-                                    </div>
-                                    </form>
-                                    <!-- /.row -->
-                                </div>
-                                <!-- /.card-body -->
-
-                            </div>
-                        </div>
-                    @endif
 
                     <div class="col-md-12">
                         <div class="card card-info card-outline">
@@ -143,46 +90,64 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">لیست کاربران دوره</h3>
+                            <h3 class="card-title">لیست آزمون های دوره</h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body table-responsive p-0">
                             <table class="table table-hover">
                                 <tr>
                                     <th>آیدی</th>
-                                    <th>نام و نام خانوادگی</th>
-                                    <th>تاریخ اضافه شدن به دوره</th>
-                                    <th>نقش</th>
+                                    <th>عنوان آزمون</th>
+                                    <th>تاریخ شروع آزمون</th>
+                                    <th>ساعت شروع آزمون</th>
+                                    <th>وضعیت</th>
                                     <th>عملیات</th>
                                 </tr>
-                                @foreach($usersIC as $user)
+                                @foreach($course->exams as $exam)
                                     <tr>
-                                        <td>{{ $user->id }}</td>
-                                        <td>{{ $user->name .' '. $user->family }}</td>
-                                        <td>{{ getCreateAtInJalali($user->pivot->create_at) }}</td>
+                                        <td>{{ $exam->id }}</td>
+                                        <td>{{ $exam->title}}</td>
+                                        <td>{{ $exam->getStartAt()['date'] }}</td>
+                                        <td>{{ $exam->getStartAt()['time'] }}</td>
                                         <td>
-                                            <!-- a => approved | q => Queue | r => reject -->
-                                            <span class="badge @if($user->pivot->role ==='teacher') badge-warning @else badge-primary @endif">@if($user->pivot->role ==='teacher') {{ 'استاد' }} @else {{ 'دانشجو' }} @endif</span>
+                                            <span class="badge @if($exam->getStatus()[0] === 'p') badge-warning
+                                                @elseif($exam->getStatus()[0] === 's') badge-success
+                                                @else badge-danger
+                                                @endif">
+                                                    {{ $exam->getStatus()[1] }}
+                                                </span>
                                         </td>
                                         <td>
-
+                                            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher' )
+                                                <a href="{{ route('exams.edit', $exam->id) }}">
+                                                    <button
+                                                        type="button"
+                                                        class="btn text-primary"
+                                                        data-toggle="tooltip"
+                                                        title="ویرایش آزمون"
+                                                        data-widget="chat-pane-toggle"
+                                                    >
+                                                        <i class="fa fa-edit"></i>
+                                                    </button>
+                                                </a>
+                                            @endif
                                             <button
                                                 type="button"
                                                 class="btn"
                                                 data-toggle="tooltip"
-                                                title="نمایش جزئیات"
+                                                title="جزئیات آزمون"
                                                 data-widget="chat-pane-toggle"
                                             >
                                                 <i class="fa fa-eye"></i>
                                             </button>
-                                            @if(auth()->user()->role === 'admin')
+                                            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher' )
                                             <button
                                                 type="button"
                                                 class="btn text-danger"
                                                 data-toggle="tooltip"
-                                                title="حذف از دوره"
+                                                title="حذف آزمون از دوره"
                                                 data-widget="chat-pane-toggle"
-                                                onclick="$('#delete-user-{{$user->id}}').submit()"
+                                                onclick="$('#delete-exam-{{$exam->id}}').submit()"
                                             >
                                                 <i class="fa fa-trash"></i>
                                             </button>
@@ -194,9 +159,9 @@
 {{--                                                @csrf--}}
 {{--                                                @method('put')--}}
 {{--                                            </form>--}}
-                                            <form action="{{ route('courses.deleteUser', [ 'user_id' => $user->id , 'id' => $course->id]) }}" method="post" id="delete-user-{{$user->id}}">
+                                            <form action="{{ route('courses.deleteExam', [$course->id,$exam->id]) }}" method="post" id="delete-exam-{{$exam->id}}">
                                                 @csrf
-                                                @method('put')
+                                                @method('delete')
                                             </form>
 
                                     </tr>

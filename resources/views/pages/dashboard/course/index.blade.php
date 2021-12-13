@@ -121,10 +121,10 @@
                                         <td>{{ $course->getStartAtInJalali() }}</td>
                                         <td>{{ $course->getEndAtInJalali() }}</td>
                                         <td>
-                                            <span class="badge @if($course->status === 'p') badge-warning
-                                                @elseif($course->status === 's') badge-success
-                                                @else badge-warning
-                                                @endif">{{ $course->getStatus() }}
+                                            <span class="badge @if($course->getStatus()[0] === 'p') badge-warning
+                                                @elseif($course->getStatus()[0] === 's') badge-success
+                                                @else badge-danger
+                                                @endif">{{ $course->getStatus()[1] }}
                                             </span>
                                         </td>
                                         <td>

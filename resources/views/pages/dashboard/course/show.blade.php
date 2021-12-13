@@ -35,7 +35,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">آزمون های برگزار شده</span>
-                                <span class="info-box-number">10</span>
+                                <span class="info-box-number">{{ count($examsHeld) }}</span>
                             </div>
 
                         </div>
@@ -218,9 +218,15 @@
                                         @foreach($course->exams as $exam)
                                             <tr>
                                             <td>{{ $exam->title }}</td>
-                                            <td>{{ $exam->getStartAt() }}</td>
+                                            <td>{{ $exam->getStartAt()['date'] }}</td>
                                             <td>{{ $exam->getTimeExam() }} دقیقه</td>
-                                            <td><span class="badge badge-success">{{ $exam->getStatus() }}</span></td>
+                                            <td><span class="badge @if($exam->getStatus()[0] === 'p') badge-warning
+                                                @elseif($exam->getStatus()[0] === 's') badge-success
+                                                @else badge-danger
+                                                @endif">
+                                                    {{ $exam->getStatus()[1] }}
+                                                </span>
+                                            </td>
                                             <td>
                                                 <button
                                                     type="button"
@@ -300,10 +306,23 @@
                                     <span class="info-box-icon"><i class="fa fa-question text-xl"></i></span>
 
                                     <div class="info-box-content">
-                                        <a href="{{ route('courses.studentList',$course->id) }}">
+                                        <a href="{{ route('courses.exams',$course->id) }}">
 
                                             <span class="info-box-number">مدیریت آزمون</span>
-                                            <span class="info-box-text">ویرایش ، حذف و اضافه کردن آزمون</span>
+                                            <span class="info-box-text">ویرایش یا حذف آزمون</span>
+                                        </a>
+                                    </div>
+                                    <!-- /.info-box-content -->
+                                </div>
+
+                                <div class="info-box mb-3 bg-success">
+                                    <span class="info-box-icon"><i class="fa fa-plus text-xl"></i></span>
+
+                                    <div class="info-box-content">
+                                        <a href="{{ route('courses.createExam',$course->id) }}">
+
+                                            <span class="info-box-number">آزمون جدید</span>
+                                            <span class="info-box-text">اضافه کردن آزمون</span>
                                         </a>
                                     </div>
                                     <!-- /.info-box-content -->

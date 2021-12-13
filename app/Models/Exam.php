@@ -5,10 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Exam extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -24,11 +25,20 @@ class Exam extends Model
     }
 
     public function getInJalali($date){
-        return verta($date)->format('Y/m/d');
+        $dateFormat = verta($date)->format('Y/m/d');
+        $timeFormat = verta($date)->format('g:i a');
+        return [
+            'date' => $dateFormat,
+            'time' => $timeFormat,
+        ];
     }
 
     public function getStartAt(){
         return $this->getInJalali($this->start_at);
+    }
+
+    public function getEndAt(){
+        return $this->getInJalali($this->end_at);
     }
 
     public function getTimeExam()
@@ -38,8 +48,8 @@ class Exam extends Model
 
     public function getStatus()
     {
-        if(Carbon::now()->gt($this->end_at)) return 'خاتمه یافته';
-        if(Carbon::now()->lte($this->start_at)) return 'شروع نشده';
-        return 'در حال برگزاری';
+        if(Carbon::now()->gt($this->end_at)) return ['e','خاتمه یافته'];
+        if(Carbon::now()->lte($this->start_at)) return ['p','شروع نشده'];
+        return ['s','در حال برگزاری'];
     }
 }
