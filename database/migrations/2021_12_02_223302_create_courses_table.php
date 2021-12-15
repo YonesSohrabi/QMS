@@ -20,6 +20,7 @@ class CreateCoursesTable extends Migration
             $table->mediumText('description');
             $table->timestamp('start_at');
             $table->timestamp('end_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -18,8 +18,7 @@ class CreateQuizzesTable extends Migration
             $table->tinyText('type');
             $table->tinyText('quiz_title');
             $table->mediumText('quiz_text');
-            $table->text('quiz_pic')->nullable();
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

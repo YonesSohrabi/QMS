@@ -49,6 +49,8 @@ class ExamController extends Controller
     public function update(UpdateExamRequest $request, Exam $exam)
     {
         $data = $request->validated();
+        $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
+        $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
         $exam->update($data);
 
         return back();

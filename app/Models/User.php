@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function courses(){
         return $this->belongsToMany(Course::class)
-            ->whereNull('deleted_at')
+//            ->whereNull('deleted_at')
             ->withTimestamps()
             ->withPivot('deleted_at','role');
     }

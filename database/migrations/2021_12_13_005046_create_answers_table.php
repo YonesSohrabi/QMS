@@ -20,7 +20,7 @@ class CreateAnswersTable extends Migration
             $table->foreignId('quiz_id')->constrained()
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
-            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

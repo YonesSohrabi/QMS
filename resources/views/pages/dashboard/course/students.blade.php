@@ -29,117 +29,8 @@
         </section>
 
         <!-- Main content -->
-        <section class="content">
-            <div class="container-fluid">
-                <!-- /.row -->
-
-                <div class="row">
-                    @if(auth()->user()->role === 'admin')
-                        <div class="col-md-12">
-                            <div class="card card-default">
-                                <div class="card-header">
-                                    <h3 class="card-title">افزودن کاربر به دوره</h3>
-
-                                    <div class="card-tools">
-                                        <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                        <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
-                                    </div>
-                                </div>
-                                <!-- /.card-header -->
-                                <div class="card-body">
-                                    <form action="{{ route('courses.addUser', $course->id) }}" method="post">
-                                        @csrf
-                                        <div class="row">
-                                        <div class="col-6">
-                                                <div class="form-group">
-                                                    <label>نام کاربر</label>
-                                                    <select class="form-control select2" name="name[]"  multiple="multiple" data-placeholder="نام کاربر را وارد کنید"
-                                                            style="width: 100%;text-align: right;">
-                                                        @foreach($users as $user)
-
-                                                            <option value="{{ $user->id }}">
-                                                                {{ $user->name .' '. $user->family }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                        </div>
-                                        <div class="form-group col-6">
-                                            <label>نقش <span class="text-danger"> * </span></label>
-                                            <select name="role" class="form-control">
-                                                <option value="">نقش کاربر را مشخص کنید</option>
-                                                <option value="teacher">استاد</option>
-                                                <option value="student">دانشجو</option>
-                                            </select>
-                                        </div>
-
-                                            <button type="submit" class="btn btn-outline-primary float-right col-12">
-                                                <i class="fa fa-plus"></i>
-                                                اضافه کردن کاربر
-                                            </button>
-
-                                    </div>
-                                    </form>
-                                    <!-- /.row -->
-                                </div>
-                                <!-- /.card-body -->
-
-                            </div>
-                        </div>
-                    @endif
-
-                    <div class="col-md-12">
-                        <div class="card card-info card-outline">
-                            <div class="card-header">
-                                <h3 class="card-title">
-                                    <small>جستجو</small>
-                                </h3>
-                                <!-- tools box -->
-                                <div class="card-tools">
-                                    <button type="button" class="btn btn-tool btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-tool btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
-                                        <i class="fa fa-times"></i>
-                                    </button>
-                                </div>
-                                <!-- /. tools -->
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body" style="display: block;">
-                                <div class="row d-flex justify-content-between">
-                                    <div class="col-2 d-flex justify-content-between">
-                                        <div>
-                                            <a href="{{ route('users.index',['role' => 'teacher']) }}" class="btn btn-block btn-outline-primary">
-                                                استاد
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="{{ route('users.index',['role' => 'student']) }}" class="btn btn-block btn-outline-info">
-                                                دانشجو
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-8">
-                                        <form action="{{ route('users.index') }}" method="get"  class="form-inline ml-3">
-                                            <div class="input-group input-group-sm" style="width: 300px;">
-                                                <input type="text" name="search" class="form-control float-right" placeholder="نام کاربر را وارد کنید ... ">
-
-                                                <div class="input-group-append">
-                                                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.card -->
-                </div>
-                <!-- /.col-->
-            </div>
-            <div class="row">
+        <section class="row content">
+            <div class="col-8">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
@@ -207,6 +98,108 @@
                     </div>
                     <!-- /.card -->
                 </div>
+            </div>
+            <div class="container-fluid col-4">
+                <div class="row">
+                    @if(auth()->user()->role === 'admin')
+                        <div class="col-md-12">
+                            <div class="card card-default">
+                                <div class="card-header">
+                                    <h3 class="card-title">افزودن کاربر به دوره</h3>
+
+                                    <div class="card-tools">
+                                        <button type="button" class="btn btn-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button type="button" class="btn btn-tool" data-widget="remove"><i class="fa fa-remove"></i></button>
+                                    </div>
+                                </div>
+                                <!-- /.card-header -->
+                                <div class="card-body">
+                                    <form action="{{ route('courses.addUser', $course->id) }}" method="post">
+                                        @csrf
+                                        <div class="row form-group">
+
+
+                                            <label>نام کاربر</label>
+                                            <select class="form-control select2" name="name[]"  multiple="multiple" data-placeholder="نام کاربر را وارد کنید"
+                                                    style="width: 100%;text-align: right;">
+                                                @foreach($users as $user)
+
+                                                    <option value="{{ $user->id }}">
+                                                        {{ $user->name .' '. $user->family }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+
+                                        </div>
+                                        <div class="row form-group">
+                                            <label>نقش <span class="text-danger"> * </span></label>
+                                            <select name="role" class="form-control">
+                                                <option value="">نقش کاربر را مشخص کنید</option>
+                                                <option value="teacher">استاد</option>
+                                                <option value="student">دانشجو</option>
+                                            </select>
+                                        </div>
+
+                                        <button type="submit" class="btn btn-outline-primary float-right col-12">
+                                            <i class="fa fa-plus"></i>
+                                            اضافه کردن کاربر
+                                        </button>
+                                    </form>
+                                </div>
+                                </form>
+                                <!-- /.row -->
+                            </div>
+                        </div>
+                    @endif
+                </div>
+
+                <div class="row">
+                    <div class="card card-info card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <small>جستجو</small>
+                            </h3>
+                            <!-- tools box -->
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body" style="display: block;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form action="{{ route('users.index') }}" method="get"  class="form-inline ml-3">
+                                        <div class="input-group input-group-md" style="width: 300px;">
+                                            <input type="text" name="search" class="form-control float-right" placeholder="نام کاربر را وارد کنید ... ">
+
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row d-flex justify-content-start">
+                                <div class="m-2">
+                                    <a href="{{ route('users.index',['role' => 'teacher']) }}" class="btn btn-block btn-outline-primary">
+                                        استاد
+                                    </a>
+                                </div>
+                                <div class="m-2">
+                                    <a href="{{ route('users.index',['role' => 'student']) }}" class="btn btn-block btn-outline-info">
+                                        دانشجو
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
             </div>
         </section>
         <!-- /.row -->

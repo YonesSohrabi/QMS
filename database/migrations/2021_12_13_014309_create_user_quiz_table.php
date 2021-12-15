@@ -21,8 +21,10 @@ class CreateUserQuizTable extends Migration
             $table->foreignId('quiz_id')->constrained()
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+            $table->boolean('user_designer');
             $table->text('answer')->nullable();
             $table->tinyText('score')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

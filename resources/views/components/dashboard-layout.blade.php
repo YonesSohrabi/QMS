@@ -46,11 +46,6 @@
 <!-- /.content-wrapper -->
 
 
-<!-- Control Sidebar -->
-<aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-</aside>
-
 
 <!-- jQuery -->
 <script src="{{ asset('templete/plugins/jquery/jquery.min.js') }}"></script>

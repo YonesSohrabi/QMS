@@ -22,6 +22,7 @@ class CreateExamQuizTable extends Migration
             $table->foreignId('quiz_id')->constrained()
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
+            $table->softDeletes();
         });
     }
 

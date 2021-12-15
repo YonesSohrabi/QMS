@@ -5,10 +5,11 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -23,7 +24,7 @@ class Course extends Model
 
     public function users(){
         return $this->belongsToMany(User::class)
-            ->whereNull('deleted_at')
+//            ->whereNull('deleted_at')
             ->withTimestamps()
             ->withPivot('deleted_at','role');
     }
@@ -36,7 +37,7 @@ class Course extends Model
 
     public function getTeacher() {
         return $this->belongsToMany(User::class)
-            ->whereNull('deleted_at')
+//            ->whereNull('deleted_at')
             ->wherePivot('role','=','teacher')
             ->withTimestamps()
             ->withPivot(['deleted_at','role']);
@@ -44,7 +45,7 @@ class Course extends Model
 
     public function getStudents() {
         return $this->belongsToMany(User::class)
-            ->whereNull('deleted_at')
+//            ->whereNull('deleted_at')
             ->wherePivot('role','=','student')
             ->withTimestamps()
             ->withPivot(['deleted_at','role','created_at']);

@@ -4260,10 +4260,10 @@ S2.define('select2/i18n/en',[],function () {
       return message;
     },
     noResults: function () {
-      return 'No results found';
+      return 'نتیجه ای یافت نشد';
     },
     searching: function () {
-      return 'Searching…';
+      return 'در حال جستجو ...';
     }
   };
 });
@@ -4869,7 +4869,7 @@ S2.define('select2/core',[
     // Hide the original select
     $element.addClass('select2-hidden-accessible');
 	$element.attr('aria-hidden', 'true');
-	
+
     // Synchronize any monitored attributes
     this._syncAttributes();
 
