@@ -55,6 +55,10 @@ Route::middleware('auth')->group(function (){
         ->name('exams.edit');
     Route::put('exams/{exam}',[ExamController::class,'update'])
         ->name('exams.update');
+    Route::post('exams/{exam}/edit',[ExamController::class, 'addNewQuiz'])
+        ->name('exams.addNewQuiz');
+    Route::post('exams/{exam}/edit',[ExamController::class, 'addQuizFromBank'])
+        ->name('exams.addQuizFromBank');
 });
 
 

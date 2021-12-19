@@ -23,6 +23,7 @@ class CreateExamQuizTable extends Migration
                 ->onUpdate('CASCADE')
                 ->onDelete('CASCADE');
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 

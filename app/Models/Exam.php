@@ -24,6 +24,13 @@ class Exam extends Model
         return $this->belongsTo(Course::class, 'course_id');
     }
 
+    public function quizzes(){
+        return $this->belongsToMany(Quiz::class)
+//            ->whereNull('deleted_at')
+            ->withTimestamps()
+            ->withPivot(['score','delete_at']);
+    }
+
     public function getInJalali($date){
         $dateFormat = verta($date)->format('Y/m/d');
         $timeFormat = verta($date)->format('g:i a');

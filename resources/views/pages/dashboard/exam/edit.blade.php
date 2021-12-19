@@ -120,7 +120,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <form action="" method="post">
+                                        <form action="{{ route('exams.addQuizFromBank',$exam->id) }}" method="post">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-10">
@@ -128,18 +128,9 @@
                                                         <label>عنوان سوال</label>
                                                         <select class="form-control select2" name="title[]"  multiple="multiple" data-placeholder=" ...عنوان سوال را وارد کنید"
                                                                 style="width: 100%;text-align: right;">
-                                                            <option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option><option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option><option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option><option>سلام</option>
-                                                            <option>سلام</option>
-                                                            <option>سلام</option>
+                                                            @foreach($teacherQuizzes as $quiz)
+                                                                <option value="{{$quiz->id}}">{{ $quiz->quiz_title }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -177,16 +168,20 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <form action="{{ route('exams.update',$exam->id) }}" method="post" role="form" id="quiz_form">
+                                        <form action="{{ route('exams.addNewQuiz',$exam->id) }}" method="post" role="form" id="quiz_form">
                                         @csrf
-                                        @method('PUT')
                                         <!-- text input -->
-                                            <div class="form-group">
-                                                <label>عنوان سوال</label>
-                                                <input type="text" name="title" class="form-control" placeholder="عنوانی کوتاه برای سوال ...">
+                                            <div class="row">
+                                                <div class="form-group col-10">
+                                                    <label>عنوان سوال</label>
+                                                    <input type="text" name="quiz_title" class="form-control" placeholder="عنوانی کوتاه برای سوال ...">
+                                                </div>
 
+                                                <div class="form-group col-2">
+                                                    <label>نمره <span class="text-danger"> * </span></label>
+                                                    <input type="number" class="form-control" name="score" min="0">
+                                                </div>
                                             </div>
-
                                             <!-- textarea -->
                                             <div class="form-group">
                                                 <label>سوال</label>
@@ -362,6 +357,11 @@
         <script src="{{ asset('templete/plugins/select2/select2.full.min.js') }}"></script>
 
         <script>
+            var x = 0;
+            function deleteOption(e){
+                e.parentElement.parentElement.parentElement.remove();
+                x--;
+            }
             $(function () {
 
                 //Initialize Select2 Elements
@@ -393,15 +393,20 @@
                     }
                 });
 
-                var x = 0; //initlal text box count
+
 
                 $('#add_button').click(function(e){ //on add input button click
                     e.preventDefault();
                     x++; //text box increment
                     $('#answer_div').append(
                         '<div class="form-group">'+
+                        '<div class="d-flex justify-content-between">' +
                         '<label class="text-info"> گزینه '+x+'</label>'+
-                        '<textarea class="form-control ck-content" name="quiz_answer_text[]"'+
+                        '<div>'+
+                        '<input type="checkbox" value="'+(x-1)+'" name="quiz_answer[isCorrect][]">'+
+                        '<button type="button" class="btn bg-transparent text-danger" onclick="deleteOption(this)"><i class="fa fa-trash"></i></button>' +
+                        '</div></div>'+
+                        '<textarea class="form-control ck-content" name="quiz_answer[text][]"'+
                         ' placeholder="متن مربوط به گزینه سوال را وارد کنید ...">'+
                         '</textarea>'+
                         '</div>'
@@ -413,12 +418,10 @@
                     $('#quiz_form').submit();
                 });
 
-                // $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-                //     e.preventDefault(); $(this).parent('div').remove(); x--;
-                // });
-
 
             })
+
+
             ClassicEditor
                 .create( document.querySelector( '#editor' ),{
                     language: 'fa'

@@ -75,4 +75,12 @@ class User extends Authenticatable
     public function getCreateAtInJalali(){
         return verta($this->created_at)->format('Y/m/d');
     }
+
+    public function teacherQuizzes(){
+        return $this->belongsToMany(Quiz::class)
+//            ->whereNull('deleted_at')
+            ->wherePivot('user_designer','=','1')
+            ->withTimestamps()
+            ->withPivot(['user_designer','answer','score']);
+    }
 }
