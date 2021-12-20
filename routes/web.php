@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function (){
         ->name('courses.studentList');
     Route::post('courses/{course}/students',[CourseController::class,'addUserToCourse'])
         ->name('courses.addUser');
-    Route::put('courses/{id}/students/{user_id}',[CourseController::class,'deleteUserFromCourse'])
+    Route::put('courses/{course}/students/{user}',[CourseController::class,'deleteUserFromCourse'])
         ->name('courses.deleteUser');
     Route::get('courses/{course}/exams',[ExamController::class,'examsList'])
         ->name('courses.exams');
@@ -55,10 +55,8 @@ Route::middleware('auth')->group(function (){
         ->name('exams.edit');
     Route::put('exams/{exam}',[ExamController::class,'update'])
         ->name('exams.update');
-    Route::post('exams/{exam}/edit',[ExamController::class, 'addNewQuiz'])
-        ->name('exams.addNewQuiz');
-    Route::post('exams/{exam}/edit',[ExamController::class, 'addQuizFromBank'])
-        ->name('exams.addQuizFromBank');
+    Route::post('exams/{exam}/edit',[ExamController::class, 'addQuiz'])
+        ->name('exams.addQuiz');
 });
 
 

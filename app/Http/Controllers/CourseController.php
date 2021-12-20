@@ -35,12 +35,16 @@ class CourseController extends Controller
 
     public function create()
     {
+        $this->authorize('create',Course::class);
+
         return view('pages.dashboard.course.create');
     }
 
 
     public function store(CourseRequest $request)
     {
+        $this->authorize('create',Course::class);
+
         $data = $request->validated();
 
         $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
@@ -52,6 +56,8 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
+        $this->authorize('view',$course);
+
         $examsHeld = $course->exams()->where('start_at','<', Carbon::now())->get();
 
         $teacher = $course->getTeacher->first();
@@ -68,46 +74,58 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        //
+        $this->authorize('update',$course);
+
     }
 
     public function update(Request $request, Course $course)
     {
-        //
+        $this->authorize('update',$course);
+
     }
 
     public function destroy(Course $course)
     {
-        //
+        $this->authorize('delete',$course);
+
     }
 
     public function studentList(Course $course)
     {
+        $this->authorize('view',$course);
+
         $users = User::all();
         $usersIC = $course->users;
+
         return view('pages.dashboard.course.students', compact('usersIC', ['users','course']));
     }
 
     public function addUserToCourse(Request $request,Course $course){
+
+        $this->authorize('create',Course::class);
+
         $role = $request->role;
         if ($role === 'teacher' && count($course->getTeacher)){
             return back();
         }
+
         foreach ($request->get('name') as $userID){
             $course->users()->attach($userID,['role' => $role]);
         }
+
         return back();
     }
 
-    public function deleteUserFromCourse($id,$user_id){
+    public function deleteUserFromCourse(Course $course,User $user){
+
+        $this->authorize('delete',Course::class);
 
         DB::table('course_user')
-            ->where('user_id', $user_id)
-            ->where('course_id', $id)
+            ->where('user_id', $user->id)
+            ->where('course_id', $course->id)
             ->update(array('deleted_at' => DB::raw('NOW()')));
 
         return back();
     }
-
 
 }

@@ -28,7 +28,7 @@ class Exam extends Model
         return $this->belongsToMany(Quiz::class)
 //            ->whereNull('deleted_at')
             ->withTimestamps()
-            ->withPivot(['score','delete_at']);
+            ->withPivot(['score']);
     }
 
     public function getInJalali($date){

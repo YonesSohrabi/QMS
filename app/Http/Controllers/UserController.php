@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use App\Policies\CoursePolicy;
+use App\Policies\UserPolicy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,6 +15,8 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+//        $this->authorize('viewAny',UserPolicy::class);
+
         $users = User::where('status','!=',2);
 
         if ($request->search)

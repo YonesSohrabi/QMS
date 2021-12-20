@@ -47,7 +47,12 @@ class ExamController extends Controller
     public function edit(Exam $exam)
     {
         $teacherQuizzes = User::find(auth()->user()->id)->teacherQuizzes;
-        return view('pages.dashboard.exam.edit',compact(['exam','teacherQuizzes']));
+        $quizzesExam = $exam->quizzes;
+        return view('pages.dashboard.exam.edit',compact([
+            'exam',
+            'teacherQuizzes',
+            'quizzesExam'
+        ]));
     }
 
 
@@ -71,10 +76,37 @@ class ExamController extends Controller
 
     public function examsList(Course $course)
     {
+
         return view('pages.dashboard.exam.index',compact('course'));
     }
 
-    public function addNewQuiz(Request $request, Exam $exam)
+    public function addQuiz(Request $request, Exam $exam)
+    {
+        switch ($request->type){
+            case 'new':
+                return $this->addNewQuiz($request,$exam);
+            case 'bank':
+                return $this->addQuizFromBank($request,$exam);
+            default:
+                abort(404);
+        }
+
+    }
+
+    public function addQuizFromBank(Request $request ,Exam $exam)
+    {
+
+        foreach ($request->title as $quizID){
+            $exam->quizzes()->attach(
+                $quizID,
+                ['score' => $request->score]
+            );
+        }
+
+        return back();
+    }
+
+    public function addNewQuiz(Request $request ,Exam $exam)
     {
         $quiz_data = $request->except('quiz_answer');
         $answer_data = $request->get('quiz_answer');
@@ -123,10 +155,5 @@ class ExamController extends Controller
         $quiz && $answer ? DB::commit() : DB::rollBack();
 
         return back();
-    }
-
-    public function addQuizFromBank()
-    {
-        dd('salam');
     }
 }

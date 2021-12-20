@@ -42,19 +42,23 @@
                                 <tr>
                                     <th>آیدی</th>
                                     <th>نام و نام خانوادگی</th>
-                                    <th>تاریخ اضافه شدن به دوره</th>
+                                    @cannot('isStudent',$course)<th>تاریخ اضافه شدن به دوره</th>@endcannot
                                     <th>نقش</th>
-                                    <th>عملیات</th>
+                                    @cannot('isStudent',$course)
+                                        <th>عملیات</th>
+                                    @endcannot
                                 </tr>
                                 @foreach($usersIC as $user)
                                     <tr>
                                         <td>{{ $user->id }}</td>
                                         <td>{{ $user->name .' '. $user->family }}</td>
-                                        <td>{{ getCreateAtInJalali($user->pivot->create_at) }}</td>
+                                        @cannot('isStudent',$course)
+                                            <td>{{ getCreateAtInJalali($user->pivot->create_at) }}</td>
+                                        @endcannot
                                         <td>
-                                            <!-- a => approved | q => Queue | r => reject -->
                                             <span class="badge @if($user->pivot->role ==='teacher') badge-warning @else badge-primary @endif">@if($user->pivot->role ==='teacher') {{ 'استاد' }} @else {{ 'دانشجو' }} @endif</span>
                                         </td>
+                                        @cannot('isStudent',$course)
                                         <td>
 
                                             <button
@@ -66,42 +70,38 @@
                                             >
                                                 <i class="fa fa-eye"></i>
                                             </button>
-                                            @if(auth()->user()->role === 'admin')
-                                            <button
-                                                type="button"
-                                                class="btn text-danger"
-                                                data-toggle="tooltip"
-                                                title="حذف از دوره"
-                                                data-widget="chat-pane-toggle"
-                                                onclick="$('#delete-user-{{$user->id}}').submit()"
-                                            >
-                                                <i class="fa fa-trash"></i>
-                                            </button>
-                                            @endif
+                                            @can('isAdmin',\App\Policies\CoursePolicy::class)
+                                                <button
+                                                    type="button"
+                                                    class="btn text-danger"
+                                                    data-toggle="tooltip"
+                                                    title="حذف از دوره"
+                                                    data-widget="chat-pane-toggle"
+                                                    onclick="$('#delete-user-{{$user->id}}').submit()"
+                                                >
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            @endcan
                                         </td>
-
-
-{{--                                            <form action="{{ route('users.status', [$user->id,'a']) }}" method="post" id="confirm-user-{{$user->id}}">--}}
-{{--                                                @csrf--}}
-{{--                                                @method('put')--}}
-{{--                                            </form>--}}
-                                            <form action="{{ route('courses.deleteUser', [ 'user_id' => $user->id , 'id' => $course->id]) }}" method="post" id="delete-user-{{$user->id}}">
+                                        @endcannot
+                                        @can('isAdmin',\App\Policies\CoursePolicy::class)
+                                            <form action="{{ route('courses.deleteUser', [ 'user' => $user->id , 'course' => $course->id]) }}" method="post" id="delete-user-{{$user->id}}">
                                                 @csrf
                                                 @method('put')
                                             </form>
+                                        @endcan
 
                                     </tr>
                                 @endforeach
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
+
             <div class="container-fluid col-4">
-                <div class="row">
-                    @if(auth()->user()->role === 'admin')
+                @can('isAdmin',\App\Policies\CoursePolicy::class)
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="card card-default">
                                 <div class="card-header">
@@ -150,8 +150,8 @@
                                 <!-- /.row -->
                             </div>
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endcan
 
                 <div class="row">
                     <div class="card card-info card-outline">

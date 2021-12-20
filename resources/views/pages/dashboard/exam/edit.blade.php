@@ -120,7 +120,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <form action="{{ route('exams.addQuizFromBank',$exam->id) }}" method="post">
+                                        <form action="{{ route('exams.addQuiz',[$exam->id,'type' => 'bank']) }}" method="post">
                                             @csrf
                                             <div class="row">
                                                 <div class="col-10">
@@ -168,7 +168,7 @@
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        <form action="{{ route('exams.addNewQuiz',$exam->id) }}" method="post" role="form" id="quiz_form">
+                                        <form action="{{ route('exams.addQuiz',[$exam->id,'type' => 'new']) }}" method="post" role="form" id="quiz_form">
                                         @csrf
                                         <!-- text input -->
                                             <div class="row">
@@ -207,7 +207,16 @@
 
                     </div>
                 </div>
+
                 <div class="col-md-5">
+                    @if($quizzesExam->isEmpty())
+                        <div class="alert alert-primary alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h5><i class="icon fa fa-warning"></i> توجه!</h5>
+                            فعلا هیچ سوالی به این آزمون اضافه نشده است .<br>
+                            شما می توانید همین الان از بخش کناری ، به دو صورت افزودن سوال از بانک یا تعریف سوال جدید برای اضافه کردن سوال به این آزمون استفاده کنید .
+                        </div>
+                    @else
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">
@@ -216,117 +225,49 @@
                             </h3>
 
                             <div class="card-tools">
-                                <ul class="pagination pagination-sm">
-                                    <li class="page-item"><a href="#" class="page-link">«</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">۱</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">۲</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">۳</a></li>
-                                    <li class="page-item"><a href="#" class="page-link">»</a></li>
-                                </ul>
+{{--                                {{ $users->links('vendor.pagination.tailwind') }}--}}
+{{--                                <ul class="pagination pagination-sm">--}}
+{{--                                    <li class="page-item"><a href="#" class="page-link">«</a></li>--}}
+{{--                                    <li class="page-item"><a href="#" class="page-link">۱</a></li>--}}
+{{--                                    <li class="page-item"><a href="#" class="page-link">۲</a></li>--}}
+{{--                                    <li class="page-item"><a href="#" class="page-link">۳</a></li>--}}
+{{--                                    <li class="page-item"><a href="#" class="page-link">»</a></li>--}}
+{{--                                </ul>--}}
                             </div>
                         </div>
-                        <!-- /.card-header -->
                         <div class="card-body">
                             <ul class="todo-list">
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="mr-1">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <input type="checkbox" value="" name="">
-                                    <!-- todo text -->
-                                    <span class="text">فیثاغورس</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"> 2 از 10</small>
-                                    <small class="badge badge-success">4 گزینه ای</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fa fa-edit"></i>
-                                        <i class="fa fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="mr-1">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <input type="checkbox" value="" name="">
-                                    <!-- todo text -->
-                                    <span class="text">فیثاغورس</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"> 2 از 10</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fa fa-edit"></i>
-                                        <i class="fa fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="mr-1">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <input type="checkbox" value="" name="">
-                                    <!-- todo text -->
-                                    <span class="text">فیثاغورس</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"> 2 از 10</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fa fa-edit"></i>
-                                        <i class="fa fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="mr-1">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <input type="checkbox" value="" name="">
-                                    <!-- todo text -->
-                                    <span class="text">فیثاغورس</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"> 2 از 10</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fa fa-edit"></i>
-                                        <i class="fa fa-trash-o"></i>
-                                    </div>
-                                </li>
-                                <li>
-                                    <!-- drag handle -->
-                                    <span class="mr-1">
-                                        <i class="fa fa-ellipsis-v"></i>
-                                        <i class="fa fa-ellipsis-v"></i>
-                                    </span>
-                                    <!-- checkbox -->
-                                    <input type="checkbox" value="" name="">
-                                    <!-- todo text -->
-                                    <span class="text">فیثاغورس</span>
-                                    <!-- Emphasis label -->
-                                    <small class="badge badge-danger"> 2 از 10</small>
-                                    <!-- General tools such as edit or delete-->
-                                    <div class="tools">
-                                        <i class="fa fa-edit"></i>
-                                        <i class="fa fa-trash-o"></i>
-                                    </div>
-                                </li>
+                                @foreach($quizzesExam as $quiz)
+                                    <li>
+                                        <!-- drag handle -->
+                                        <span class="mr-1">
+                                            <i class="fa fa-ellipsis-v"></i>
+                                            <i class="fa fa-ellipsis-v"></i>
+                                        </span>
+
+                                        <!-- todo text -->
+                                        <span class="text">{{ $quiz->quiz_title }}</span>
+                                        <!-- Emphasis label -->
+                                        <small class="badge badge-danger">{{ $quiz->pivot->score }} از {{ $quiz->pivot->sum('score') }}</small>
+                                        <small class="badge badge-success">
+                                            @if($quiz->type === 'solid') تشریحی @else چند گزینه ای @endif
+                                        </small>
+                                        <!-- General tools such as edit or delete-->
+                                        <div class="tools">
+                                            <i class="fa fa-edit"></i>
+                                            <i class="fa fa-trash-o"></i>
+                                        </div>
+                                    </li>
+                                @endforeach
 
                             </ul>
                         </div>
-                        <!-- /.card-body -->
                         <div class="card-footer clearfix">
                             <button type="button" class="btn btn-info float-right"><i class="fa fa-plus"></i> جدید</button>
                         </div>
+
                     </div>
+                    @endif
                 </div>
             </div>
             <!-- /.container-fluid -->
