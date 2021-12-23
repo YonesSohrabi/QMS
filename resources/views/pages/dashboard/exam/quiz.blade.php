@@ -1,3 +1,4 @@
+{{--{{ dd($quizzes) }}--}}
 <x-dashboard-layout>
     <x-slot name="title">
         جزپیات آزمون
@@ -29,32 +30,29 @@
                 <div class="row">
 
                     <div class="col-md-8">
-
+                        @foreach($quizzes as $quiz)
+{{--                            {{ dd($quiz->toArray()['answers']) }}--}}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5 class="card-title">سوال 1</h5>
+                                        <h5 class="card-title">سوال {{ $quizzes->currentPage() }}</h5>
 
                                         <div class="card-tools">
-                                            <button type="button" class="btn btn-sm">
-                                                قبلی
-                                            </button>
-                                            <button type="button" class="btn btn-sm">
-                                                بعدی
-                                            </button>
+                                            {{ $quizzes->links('vendor.pagination.quiz') }}
                                         </div>
                                     </div>
 
                                     <div class="card-body">
-                                        به نظر شما اولین فرمول انتگرال کجا و به چه علت به کار برده شد ؟!
+                                        {!! $quiz->quiz_text !!}
                                     </div>
 
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        @if($quiz->type === 'solid')
+                            <div class="row">
                             <div class="col-md-12">
                                 <div class="card ">
                                     <div class="card-header">
@@ -79,33 +77,45 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
-                        <div class="row">
+                        @if($quiz->type === 'mulitple')
+                            <div class="row">
                             <div class="col-md-12">
                                 <div class="card ">
                                     <div class="card-header">
                                         <h5 class="card-title">پاسخ</h5>
-
                                     </div>
                                     <div class="card-body">
                                         <form action="{{ route('exams.addQuiz',[$exam->id,'type' => 'new']) }}" method="post" role="form" id="answer_form">
                                             @csrf
                                             <div class="form-group p-2">
-                                                <label class="text-info"> گزینه 1</label>
-                                                <input type="checkbox" value="" name="quiz_answer">
-                                                <span>سلام دوستان وقت بخیر</span>
+
+                                                <div class="col-md-12">
+                                                    @foreach($quiz->toArray()['answers'] as $key => $answer)
+                                                        <div class="info-box bg-info">
+                                                            <input type="checkbox" class="mt-4 mx-3" value="" name="quiz_answer">
+                                                            <span class="info-box-icon text-sm bg-danger ml-3 px-1">گزینه {{ ++$key }}</span>
+                                                            <p class="mt-3">{{ $answer['answer_text'] }}</p>
+                                                        </div>
+                                                    @endforeach
+
+
+                                                </div>
+
                                             </div>
 
                                             <button class="btn btn-dark">ارسال پاسخ</button>
 
                                         </form>
 
-
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        @endif
 
+                        @endforeach
                     </div>
 
                     <div class="col-md-4">
@@ -121,6 +131,7 @@
                     </div>
 
                 </div>
+            </div>
         </section>
 
     </div>

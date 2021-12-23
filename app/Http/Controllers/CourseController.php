@@ -76,11 +76,22 @@ class CourseController extends Controller
     {
         $this->authorize('update',$course);
 
+        return view('pages.dashboard.course.edit', compact('course'));
+
     }
 
-    public function update(Request $request, Course $course)
+    public function update(CourseRequest $request, Course $course)
     {
         $this->authorize('update',$course);
+
+        $data = $request->validated();
+
+        $data['start_at'] = date('Y-m-d H:i:s', $request->start_at/1000);
+        $data['end_at'] = date('Y-m-d H:i:s', $request->end_at/1000);
+
+        Course::update($data);
+
+        return back();
 
     }
 

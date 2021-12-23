@@ -82,7 +82,7 @@
                                         </thead>
                                         <tbody>
 
-                                        @foreach($users as $user)
+                                        @foreach($studentsInExam as $user)
                                             @if($user['pivot']['user_designer']) @continue @endif
                                             <tr>
                                                 <td>{{ $user['name'] . ' ' . $user['family'] }}</td>
@@ -133,7 +133,7 @@
                                                 <td>1</td>
                                                 <td>0</td>
                                                 <td>
-                                                    <a href="{{ route('exams.show',$exam->id) }}">
+                                                    <a href="{{ route('exams.viewQuiz',$exam->id)}}">
                                                         <button type="button" class="btn btn-outline-primary">
                                                             شرکت در آزمون
                                                         </button>
@@ -163,13 +163,18 @@
                             <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text mt-2">وضعیت</span>
-                                <span class="info-box-number mb-2 mr-2 text-success">شروع شده</span>
+                                <span class="info-box-number mb-2 mr-2 @if($exam->getStatus()[0] === 'notStarted') text-secondary
+                                        @elseif($exam->getStatus()[0] === 'satrted') text-success
+                                        @else text-danger @endif">
+                                    {{ $exam->getStatus()[1] }}
+                                </span>
+
 
                                 <span class="info-box-text">شروع آزمون</span>
-                                <span class="info-box-number mb-2 mr-2">18:26 1400/02/08</span>
+                                <span class="info-box-number mb-2 mr-2">{{ $exam->getStartAt()['date'].' '.$exam->getStartAt()['time'] }}</span>
 
                                 <span class="info-box-text">پایان آزمون</span>
-                                <span class="info-box-number mb-2 mr-2">18:26 1400/02/08</span>
+                                <span class="info-box-number mb-2 mr-2">{{ $exam->getEndAt()['date'].' '.$exam->getEndAt()['time'] }}</span>
                             </div>
                         </div>
 
@@ -177,11 +182,11 @@
                             <span class="info-box-icon"><i class="fa fa-info"></i></span>
                             <div class="info-box-content">
                                 <span class="info-box-text mt-2">نام دوره</span>
-                                <span class="info-box-number mb-2 mr-2">لاراول</span>
+                                <span class="info-box-number mb-2 mr-2">{{ $course->name }}</span>
                                 <span class="info-box-text">نام استاد</span>
-                                <span class="info-box-number mb-2 mr-2">علی زیوری</span>
+                                <span class="info-box-number mb-2 mr-2">{{ $teacher->name . ' ' . $teacher->family }}</span>
                                 <span class="info-box-text">تعداد سوالات آزمون</span>
-                                <span class="info-box-number mb-2 mr-2">7 سوال </span>
+                                <span class="info-box-number mb-2 mr-2">{{ count($quizzes) }} سوال </span>
                             </div>
                         </div>
 
@@ -236,6 +241,8 @@
                     </div>
 
                 </div>
+
+            </div>
         </section>
 
     </div>

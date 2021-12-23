@@ -55,8 +55,8 @@ class Exam extends Model
 
     public function getStatus()
     {
-        if(Carbon::now()->gt($this->end_at)) return ['e','خاتمه یافته'];
-        if(Carbon::now()->lte($this->start_at)) return ['p','شروع نشده'];
-        return ['s','در حال برگزاری'];
+        if(Carbon::now()->gt($this->end_at)) return ['ended','خاتمه یافته'];
+        if(Carbon::now()->lte($this->start_at)) return ['notStarted','شروع نشده'];
+        return ['started','در حال برگزاری'];
     }
 }

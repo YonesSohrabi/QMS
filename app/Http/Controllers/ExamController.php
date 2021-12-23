@@ -41,16 +41,32 @@ class ExamController extends Controller
     public function show(Exam $exam)
     {
         $quizzes = $exam->quizzes()->with(['users','answers'])->get();
+        $course = $exam->course;
 
-        $users = call_user_func_array(
+        $teacher = collect($course->with('users')->get()->first()->users)
+            ->filter(function ($x){
+                if ($x->pivot->role === 'teacher') return $x;
+            });
+
+        $teacher = $teacher->first();
+        $user = auth()->user()->id;
+
+        $studentsInExam = call_user_func_array(
             'array_merge',
             $quizzes->map(function ($x){
                 return $x->users;
             })->unique('id')->toArray()
         );
 
-//        dd($users);
-        return view('pages.dashboard.exam.show', compact(['exam','quizzes','users']));
+
+        return view('pages.dashboard.exam.show', compact([
+            'exam',
+            'course',
+            'quizzes',
+            'studentsInExam',
+            'user',
+            'teacher'
+        ]));
     }
 
 
@@ -169,16 +185,9 @@ class ExamController extends Controller
 
     public function viewQuiz(Exam $exam)
     {
-        $quizzes = $exam->quizzes()->with(['users','answers'])->get();
-
-        $users = call_user_func_array(
-            'array_merge',
-            $quizzes->map(function ($x){
-                return $x->users;
-            })->unique('id')->toArray()
-        );
+        $quizzes = $exam->quizzes()->with(['users','answers'])->paginate(1);
 
 //        dd($users);
-        return view('pages.dashboard.exam.quiz', compact(['exam','quizzes','users']));
+        return view('pages.dashboard.exam.quiz', compact(['exam','quizzes']));
     }
 }

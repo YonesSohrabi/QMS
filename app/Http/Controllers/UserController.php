@@ -15,7 +15,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $this->authorize('viewAny',UserPolicy::class);
+//        $this->authorize('viewAny',UserPolicy::class);
 
         $users = User::where('status','!=',2);
 

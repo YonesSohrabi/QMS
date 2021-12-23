@@ -110,8 +110,8 @@
                                         <td>{{ $exam->getStartAt()['date'] }}</td>
                                         <td>{{ $exam->getStartAt()['time'] }}</td>
                                         <td>
-                                            <span class="badge @if($exam->getStatus()[0] === 'p') badge-warning
-                                                @elseif($exam->getStatus()[0] === 's') badge-success
+                                            <span class="badge @if($exam->getStatus()[0] === 'notStarted') badge-warning
+                                                @elseif($exam->getStatus()[0] === 'started') badge-success
                                                 @else badge-danger
                                                 @endif">
                                                     {{ $exam->getStatus()[1] }}
@@ -131,15 +131,17 @@
                                                     </button>
                                                 </a>
                                             @endif
-                                            <button
-                                                type="button"
-                                                class="btn"
-                                                data-toggle="tooltip"
-                                                title="جزئیات آزمون"
-                                                data-widget="chat-pane-toggle"
-                                            >
-                                                <i class="fa fa-eye"></i>
-                                            </button>
+                                                <a href="{{ route('exams.show', $exam->id )}}">
+                                                    <button
+                                                        type="button"
+                                                        class="btn"
+                                                        data-toggle="tooltip"
+                                                        title="جزئیات آزمون"
+                                                        data-widget="chat-pane-toggle"
+                                                    >
+                                                        <i class="fa fa-eye"></i>
+                                                    </button>
+                                                </a>
                                             @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher' )
                                             <button
                                                 type="button"

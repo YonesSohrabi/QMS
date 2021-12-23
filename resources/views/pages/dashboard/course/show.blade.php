@@ -214,14 +214,15 @@
                                             <td>{{ $exam->title }}</td>
                                             <td>{{ $exam->getStartAt()['date'] }}</td>
                                             <td>{{ $exam->getTimeExam() }} دقیقه</td>
-                                            <td><span class="badge @if($exam->getStatus()[0] === 'p') badge-warning
-                                                @elseif($exam->getStatus()[0] === 's') badge-success
+                                            <td><span class="badge @if($exam->getStatus()[0] === 'notStarted') badge-warning
+                                                @elseif($exam->getStatus()[0] === 'satrted') badge-success
                                                 @else badge-danger
                                                 @endif">
                                                     {{ $exam->getStatus()[1] }}
                                                 </span>
                                             </td>
                                             <td>
+                                                <a href="{{ route('exams.show', $exam->id )}}">
                                                 <button
                                                     type="button"
                                                     class="btn"
@@ -231,6 +232,7 @@
                                                 >
                                                     <i class="fa fa-eye"></i>
                                                 </button>
+                                                </a>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -270,7 +272,7 @@
                                     </span>
 
                                     <div class="info-box-content">
-                                        <a href="">
+                                        <a href="{{ route('courses.edit',$course->id) }}">
                                             <span class="info-box-number">ویرایش دوره</span>
                                             <span class="info-box-text">ویرایش اطلاعات دوره</span>
                                         </a>
