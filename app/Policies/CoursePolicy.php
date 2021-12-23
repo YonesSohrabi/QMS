@@ -38,13 +38,12 @@ class CoursePolicy
 
     public function isAdmin(User $user)
     {
-
         return $user->role === 'admin';
     }
 
     public function isTeacher(User $user , Course $course)
     {
-        if ($user->role = 'admin'){
+        if ($this->isAdmin($user)){
             return true;
         }
 
@@ -53,8 +52,7 @@ class CoursePolicy
 
     public function isStudent(User $user , Course $course)
     {
-        return ( $this->isTeacher($user ,$course)
-            || $this->isAdmin($user)) ;
+        return !$this->isTeacher($user ,$course);
     }
 
 

@@ -70,7 +70,7 @@
                                             >
                                                 <i class="fa fa-eye"></i>
                                             </button>
-                                            @can('isAdmin',\App\Policies\CoursePolicy::class)
+                                            @can('isAdmin',\App\Models\Course::class)
                                                 <button
                                                     type="button"
                                                     class="btn text-danger"
@@ -84,7 +84,7 @@
                                             @endcan
                                         </td>
                                         @endcannot
-                                        @can('isAdmin',\App\Policies\CoursePolicy::class)
+                                        @can('isAdmin',\App\Models\Course::class)
                                             <form action="{{ route('courses.deleteUser', [ 'user' => $user->id , 'course' => $course->id]) }}" method="post" id="delete-user-{{$user->id}}">
                                                 @csrf
                                                 @method('put')
@@ -100,7 +100,7 @@
             </div>
 
             <div class="container-fluid col-4">
-                @can('isAdmin',\App\Policies\CoursePolicy::class)
+                @can('isAdmin',\App\Models\Course::class)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card card-default">

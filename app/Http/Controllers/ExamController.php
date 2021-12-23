@@ -40,7 +40,17 @@ class ExamController extends Controller
 
     public function show(Exam $exam)
     {
-        //
+        $quizzes = $exam->quizzes()->with(['users','answers'])->get();
+
+        $users = call_user_func_array(
+            'array_merge',
+            $quizzes->map(function ($x){
+                return $x->users;
+            })->unique('id')->toArray()
+        );
+
+//        dd($users);
+        return view('pages.dashboard.exam.show', compact(['exam','quizzes','users']));
     }
 
 
@@ -155,5 +165,20 @@ class ExamController extends Controller
         $quiz && $answer ? DB::commit() : DB::rollBack();
 
         return back();
+    }
+
+    public function viewQuiz(Exam $exam)
+    {
+        $quizzes = $exam->quizzes()->with(['users','answers'])->get();
+
+        $users = call_user_func_array(
+            'array_merge',
+            $quizzes->map(function ($x){
+                return $x->users;
+            })->unique('id')->toArray()
+        );
+
+//        dd($users);
+        return view('pages.dashboard.exam.quiz', compact(['exam','quizzes','users']));
     }
 }

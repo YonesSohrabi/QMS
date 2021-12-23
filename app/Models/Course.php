@@ -70,4 +70,9 @@ class Course extends Model
         if(Carbon::now()->lte($this->start_at)) return ['p','شروع نشده'];
         return ['s','در حال برگزاری'];
     }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

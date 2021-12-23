@@ -30,4 +30,9 @@ class Quiz extends Model
             ->withTimestamps()
             ->withPivot(['score','delete_at']);
     }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
+//            ->whereNull('deleted_at')
+    }
 }

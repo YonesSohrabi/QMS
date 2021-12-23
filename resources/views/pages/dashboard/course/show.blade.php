@@ -250,7 +250,7 @@
 
                     <div class="col-md-4">
                         @cannot('isStudent',$course)
-                            @can('isAdmin',\App\Policies\CoursePolicy::class)
+                            @can('isAdmin',\App\Models\Course::class)
                                 <div class="info-box mb-3 bg-success">
                                     <span class="info-box-icon"><i class="fa fa-user"></i></span>
 
@@ -316,7 +316,7 @@
                                     </div>
                             @endcan
                         @endcannot
-                    <div class="card card-primary card-outline direct-chat direct-chat-primary">
+                        <div class="card card-primary card-outline direct-chat direct-chat-primary">
                             <div class="card-header">
                                 <h3 class="card-title">گفتگو کلاسی</h3>
 

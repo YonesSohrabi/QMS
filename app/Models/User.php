@@ -60,6 +60,13 @@ class User extends Authenticatable
             ->withPivot('deleted_at','role');
     }
 
+    public function quizzes(){
+        return $this->belongsToMany(Quiz::class)
+//            ->whereNull('deleted_at')
+            ->withTimestamps()
+            ->withPivot(['user_id','user_designer','answer','score']);
+    }
+
     public function coursesWithTrashed(){
         return $this->belongsToMany(Course::class)
             ->withTimestamps()

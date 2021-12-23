@@ -16,4 +16,9 @@ class Answer extends Model
         'is_correct',
         'quiz_id',
     ];
+
+    public function quiz(){
+        return $this->belongsTo(Quiz::class);
+//            ->whereNull('deleted_at')
+    }
 }

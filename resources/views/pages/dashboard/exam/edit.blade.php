@@ -294,7 +294,6 @@
         <!-- AdminLTE App -->
         <script src="{{ asset('templete/dist/js/adminlte.min.js') }}"></script>
         <script src="{{ asset('templete/plugins/ckeditor/ckeditor.js') }}"></script>
-        <script src="{{ asset('templete/plugins/ckeditor/inline.js') }}"></script>
         <script src="{{ asset('templete/plugins/select2/select2.full.min.js') }}"></script>
 
         <script>

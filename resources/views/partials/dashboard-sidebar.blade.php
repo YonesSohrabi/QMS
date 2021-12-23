@@ -45,7 +45,8 @@
                             </p>
                         </a>
                     </li>
-                    @if(auth()->user()->role === 'admin')
+                    @can('isAdmin',\App\Models\Course::class)
+
                         <li class="nav-item">
                         <a href="../widgets.html" class="nav-link">
                             <i class="nav-icon fa fa-th"></i>
@@ -54,7 +55,8 @@
                                 <span class="right badge badge-danger">جدید</span>
                             </p>
                         </a>
-                    </li>
+                        </li>
+
                         <li class="nav-item has-treeview @if(request()->is('users/*') || request()->is('users')) menu-open @endif">
                             <a href="#" class="nav-link @if(request()->is('users/*') || request()->is('users')) active @endif">
                                 <i class="nav-icon fa fa-table"></i>
@@ -78,7 +80,7 @@
                                 </li>
                             </ul>
                         </li>
-                    @endif
+                    @endcan
                     <li class="nav-item has-treeview @if(request()->is('courses/*') || request()->is('courses')) menu-open @endif">
                         <a href="#" class="nav-link @if(request()->is('courses/*') || request()->is('courses')) active @endif">
                             <i class="nav-icon fa fa-table"></i>
