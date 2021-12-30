@@ -1,6 +1,6 @@
 <x-dashboard-layout>
     <x-slot name="title">
-        ویرایش آزمون
+        ویرایش آزمونphp
     </x-slot>
     <x-slot name="styles">
         <!-- daterange picker -->

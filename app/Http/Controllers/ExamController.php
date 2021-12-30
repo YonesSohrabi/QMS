@@ -11,6 +11,8 @@ use App\Models\Quiz;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use function MongoDB\BSON\toJSON;
 
 class ExamController extends Controller
 {
@@ -58,6 +60,8 @@ class ExamController extends Controller
             })->unique('id')->toArray()
         );
 
+        $userAttended = ceil(count(auth()->user()->quizzes()
+                ->wherePivot('user_designer','=',0)->get())/count($quizzes));
 
         return view('pages.dashboard.exam.show', compact([
             'exam',
@@ -65,7 +69,8 @@ class ExamController extends Controller
             'quizzes',
             'studentsInExam',
             'user',
-            'teacher'
+            'teacher',
+            'userAttended',
         ]));
     }
 
@@ -189,5 +194,30 @@ class ExamController extends Controller
 
 //        dd($users);
         return view('pages.dashboard.exam.quiz', compact(['exam','quizzes']));
+    }
+
+    public function sendQuiz(Exam $exam)
+    {
+
+        $userID = auth()->user()->id;
+        $quizID = $exam->quizzes->map(function ($x){ return $x->id;});
+
+        foreach ($quizID as $id){
+            if (Session::has("q$id")){
+
+                $answer = Session::get("q$id");
+                if (Quiz::where('id','=',$id)->first()->type === 'multiple'){
+                    $answer = json_encode($answer);
+                }
+
+                DB::table('quiz_user')->insert([
+                    'user_id' => $userID,
+                    'quiz_id' => $id,
+                    'answer' => $answer,
+                ]);
+
+                Session::forget("q$id");
+            }
+        }
     }
 }

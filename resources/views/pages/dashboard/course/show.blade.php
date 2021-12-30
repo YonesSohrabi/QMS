@@ -215,7 +215,7 @@
                                             <td>{{ $exam->getStartAt()['date'] }}</td>
                                             <td>{{ $exam->getTimeExam() }} دقیقه</td>
                                             <td><span class="badge @if($exam->getStatus()[0] === 'notStarted') badge-warning
-                                                @elseif($exam->getStatus()[0] === 'satrted') badge-success
+                                                @elseif($exam->getStatus()[0] === 'started') badge-success
                                                 @else badge-danger
                                                 @endif">
                                                     {{ $exam->getStatus()[1] }}

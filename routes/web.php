@@ -55,6 +55,8 @@ Route::middleware('auth')->group(function (){
         ->name('exams.show');
     Route::get('exams/{exam}/view',[ExamController::class,'viewQuiz'])
         ->name('exams.viewQuiz');
+    Route::post('exams/{exam}/view',[ExamController::class,'sendQuiz'])
+        ->name('exams.sendQuiz');
     Route::get('exams/{exam}/edit',[ExamController::class,'edit'])
         ->name('exams.edit');
     Route::put('exams/{exam}',[ExamController::class,'update'])

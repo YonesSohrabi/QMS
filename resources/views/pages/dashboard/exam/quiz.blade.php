@@ -1,7 +1,11 @@
-{{--{{ dd($quizzes) }}--}}
+{{--{{ dd($quizzes->links()) }}--}}
 <x-dashboard-layout>
     <x-slot name="title">
-        جزپیات آزمون
+        جزییات آزمون
+    </x-slot>
+
+    <x-slot name="styles">
+        @livewireStyles
     </x-slot>
 
 
@@ -16,7 +20,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
                             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">خانه</a></li>
-                            <li class="breadcrumb-item"><a href="">آزمون ها</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('exams.show',$exam->id) }}">آزمون ها</a></li>
                             <li class="breadcrumb-item active">آزمون {{ $exam->title }}</li>
                         </ol>
                     </div>
@@ -31,89 +35,31 @@
 
                     <div class="col-md-8">
                         @foreach($quizzes as $quiz)
-{{--                            {{ dd($quiz->toArray()['answers']) }}--}}
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="card-title">سوال {{ $quizzes->currentPage() }}</h5>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">سوال {{ $quizzes->currentPage() }}</h5>
 
-                                        <div class="card-tools">
-                                            {{ $quizzes->links('vendor.pagination.quiz') }}
+                                            <div class="card-tools">
+                                                {{ $quizzes->links('vendor.pagination.quiz') }}
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="card-body">
-                                        {!! $quiz->quiz_text !!}
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-
-                        @if($quiz->type === 'solid')
-                            <div class="row">
-                            <div class="col-md-12">
-                                <div class="card ">
-                                    <div class="card-header">
-                                        <h5 class="card-title">پاسخ</h5>
-
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="{{ route('exams.addQuiz',[$exam->id,'type' => 'new']) }}" method="post" role="form">
-                                        @csrf
-                                            <div class="form-group">
-                                                <textarea class="form-control ck-content" id="answer-box" name="quiz_text"
-                                                          placeholder="متن یا عکس پاسخ خود را وارد کنید ...">
-                                                </textarea>
-                                            </div>
-
-                                            <button class="btn btn-dark">ارسال پاسخ</button>
-
-                                        </form>
-
+                                        <div class="card-body">
+                                            {!! $quiz->quiz_text !!}
+                                            <input type="hidden" id="end_at" value="{{ $exam->end_at }}">
+                                        </div>
 
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @endif
 
-                        @if($quiz->type === 'mulitple')
-                            <div class="row">
-                            <div class="col-md-12">
-                                <div class="card ">
-                                    <div class="card-header">
-                                        <h5 class="card-title">پاسخ</h5>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="{{ route('exams.addQuiz',[$exam->id,'type' => 'new']) }}" method="post" role="form" id="answer_form">
-                                            @csrf
-                                            <div class="form-group p-2">
+                            @livewire('quiz-answer',[
+                                'quiz' => $quiz,
+                                'exam' => $exam,
+                            ])
 
-                                                <div class="col-md-12">
-                                                    @foreach($quiz->toArray()['answers'] as $key => $answer)
-                                                        <div class="info-box bg-info">
-                                                            <input type="checkbox" class="mt-4 mx-3" value="" name="quiz_answer">
-                                                            <span class="info-box-icon text-sm bg-danger ml-3 px-1">گزینه {{ ++$key }}</span>
-                                                            <p class="mt-3">{{ $answer['answer_text'] }}</p>
-                                                        </div>
-                                                    @endforeach
-
-
-                                                </div>
-
-                                            </div>
-
-                                            <button class="btn btn-dark">ارسال پاسخ</button>
-
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endif
 
                         @endforeach
                     </div>
@@ -123,9 +69,10 @@
                         <div class="info-box">
                             <div class="info-box-content mt-3">
                                 <span class="mr-2">زمان باقی مانده</span>
-                                <span class="mr-5">25 : 30</span>
+                                <span class="mr-3 text-danger" id="timer"></span>
                             </div>
                         </div>
+
 
 
                     </div>
@@ -133,9 +80,13 @@
                 </div>
             </div>
         </section>
+        <form action="{{ route('exams.sendQuiz',$exam->id) }}" id="form-quiz" method="post">
+            @csrf
+        </form>
 
     </div>
 
+    @livewireScripts
 
     <x-slot name="script">
 
@@ -156,7 +107,25 @@
                 .catch( error => {
                     console.error( error );
                 } );
+            const end_at = new Date(document.getElementById('end_at').value);
 
+            setInterval(function(){
+                let diff = end_at - new Date();
+                var hh = Math.floor(diff / 1000 / 60 / 60);
+                diff -= hh * 1000 * 60 * 60;
+                var mm = Math.floor(diff / 1000 / 60);
+                diff -= mm * 1000 * 60;
+                var ss = Math.floor(diff / 1000);
+                mm += (hh*60);
+                let timer = mm < 0
+                    ? 'زمان آزمون به پایان رسیده'
+                    : mm+' دقیقه '+ss+' ثانیه';
+                document.getElementById("timer").innerHTML = timer;
+            }, 1000);
+
+            $('#sendQuiz').click(function (){
+                $('#form-quiz').submit()
+            })
 
 
 

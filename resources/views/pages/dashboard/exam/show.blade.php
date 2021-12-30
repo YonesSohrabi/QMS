@@ -131,10 +131,11 @@
                                         <tbody>
                                             <tr>
                                                 <td>1</td>
-                                                <td>0</td>
+                                                <td>{{ $userAttended }}</td>
                                                 <td>
                                                     <a href="{{ route('exams.viewQuiz',$exam->id)}}">
-                                                        <button type="button" class="btn btn-outline-primary">
+                                                        <button type="button" class="btn btn-outline-primary"
+                                                        @if($exam->getStatus()[0] !== 'started' || $userAttended) disabled @endif >
                                                             شرکت در آزمون
                                                         </button>
                                                     </a>

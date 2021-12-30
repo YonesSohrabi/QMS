@@ -146,7 +146,7 @@
                                         </button>
                                     </form>
                                 </div>
-                                </form>
+
                                 <!-- /.row -->
                             </div>
                         </div>

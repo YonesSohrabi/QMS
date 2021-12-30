@@ -15,10 +15,12 @@
 
         @if ($paginator->hasMorePages())
             <a href="{{ $paginator->nextPageUrl() }}" rel="next">
-                <button type="button" class="btn btn-sm btn-primary">بعدی</button>
+                <button type="button" id="btnbtnbtn" class="btn btn-sm btn-primary">بعدی</button>
             </a>
         @else
-            <button type="button" class="btn btn-sm" disabled>بعدی</button>
+
+            <button type="button" id="sendQuiz" class="btn btn-sm">ارسال آزمون</button>
+
         @endif
 
 @endif

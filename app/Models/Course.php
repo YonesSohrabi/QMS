@@ -73,6 +73,6 @@ class Course extends Model
 
     public function isAdmin()
     {
-        return $this->role === 'admin';
+        return $this->role === User::ROLE_ADMIN;
     }
 }
