@@ -1,4 +1,3 @@
-{{--{{ dd($quizzes->links()) }}--}}
 <x-dashboard-layout>
     <x-slot name="title">
         جزییات آزمون
@@ -42,7 +41,7 @@
                                             <h5 class="card-title">سوال {{ $quizzes->currentPage() }}</h5>
 
                                             <div class="card-tools">
-                                                {{ $quizzes->links('vendor.pagination.quiz') }}
+                                                {{ $quizzes->appends(request()->query())->links('vendor.pagination.quiz') }}
                                             </div>
                                         </div>
 
@@ -55,10 +54,45 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="card-title">پاسخ ذخیره شده برای سوال {{ $quizzes->currentPage() }}</h5>
+                                        </div>
+
+                                        <div class="card-body">
+                                            @php
+                                            $answer = $quiz->users()->wherePivot('user_id',request()->user_id)->first();
+                                            $answer = $answer ? $answer->toArray()['pivot']['answer'] : null ;
+                                            @endphp
+
+                                            @if($quiz->type === 'multiple')
+                                                @if($answer)
+                                                    {{ $answer }}
+                                                @else
+                                                    {{ json_encode(Session::get("q$quiz->id")) ?? 'فعلا هیچ پاسخی ذخیره نشده است ، برای ثبت پاسخ خود کلید ذخیره پاسخ رو بزنید.'  }}
+                                                @endif
+                                            @else
+                                                @if($answer)
+                                                    {{ $answer }}
+                                                @else
+                                                    {{ Session::get("q$quiz->id") ?? 'فعلا هیچ پاسخی ذخیره نشده است ، برای ثبت پاسخ خود کلید ذخیره پاسخ رو بزنید.'  }}
+                                                @endif
+                                            @endif
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
                             @livewire('quiz-answer',[
                                 'quiz' => $quiz,
                                 'exam' => $exam,
                             ])
+
 
 
                         @endforeach

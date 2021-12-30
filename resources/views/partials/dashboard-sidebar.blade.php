@@ -47,19 +47,9 @@
                     </li>
                     @can('isAdmin',\App\Models\Course::class)
 
-                        <li class="nav-item">
-                        <a href="../widgets.html" class="nav-link">
-                            <i class="nav-icon fa fa-th"></i>
-                            <p>
-                                ویجت‌ها
-                                <span class="right badge badge-danger">جدید</span>
-                            </p>
-                        </a>
-                        </li>
-
                         <li class="nav-item has-treeview @if(request()->is('users/*') || request()->is('users')) menu-open @endif">
                             <a href="#" class="nav-link @if(request()->is('users/*') || request()->is('users')) active @endif">
-                                <i class="nav-icon fa fa-table"></i>
+                                <i class="nav-icon fa fa-user"></i>
                                 <p>
                                     مدیریت کاربران
                                     <i class="fa fa-angle-left right"></i>

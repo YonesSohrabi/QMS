@@ -1,19 +1,20 @@
 <div>
+@if(auth()->user()->role === 'student')
     @if($quiz->type === 'solid')
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
                     <div class="card-header">
                         <h5 class="card-title">پاسخ</h5>
-
                     </div>
                     <div class="card-body">
 
                             <div class="form-group">
-                                <textarea class="form-control ck-content" name="quiz_text"
-                                          placeholder="متن یا عکس پاسخ خود را وارد کنید ..." wire:model="quiz_answer">
+                                <textarea class="form-control" placeholder="متن یا عکس پاسخ خود را وارد کنید ..."
+                                          wire:model="quiz_answer">
                                 </textarea>
                             </div>
+
 
 
                         <button wire:click="saveToSession({{$quiz->id}})" class="btn btn-dark">ذخیره پاسخ</button>
@@ -25,7 +26,7 @@
         </div>
     @endif
 
-    @if($quiz->type === 'mulitple')
+    @if($quiz->type === 'multiple')
         <div class="row">
             <div class="col-md-12">
                 <div class="card ">
@@ -57,6 +58,7 @@
             </div>
         </div>
     @endif
+@endif
 
     @if(auth()->user()->role !== 'student')
             <div class="row">
@@ -72,20 +74,16 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
-                            <form action="" method="post">
-                                @csrf
-
                                 <div class="form-group">
                                     <label>نمره <span class="text-danger"> * </span></label>
-                                    <input type="number" class="form-control" name="score" min="0"
+                                    <input type="number" wire:model="score" class="form-control" name="score" min="0"
                                            max="">
                                 </div>
 
-                                <button type="submit" class="btn btn-outline-primary float-right col-12">
+                                <button wire:click="saveScore({{$quiz->id}})" class="btn btn-outline-primary float-right col-12">
                                     <i class="fa fa-plus"></i>
                                     ثبت نمره
                                 </button>
-                            </form>
                         </div>
 
                         <!-- /.row -->

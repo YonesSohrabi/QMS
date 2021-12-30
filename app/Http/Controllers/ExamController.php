@@ -144,7 +144,7 @@ class ExamController extends Controller
 
         if (is_array($answer_data) && count($answer_data)>1){
 
-            $quiz_data['type'] = 'mulitple';
+            $quiz_data['type'] = 'multiple';
 
             foreach ($answer_data['text'] as $key => $value){
                 in_array($key,$answer_data['isCorrect'])
@@ -191,6 +191,8 @@ class ExamController extends Controller
     public function viewQuiz(Exam $exam)
     {
         $quizzes = $exam->quizzes()->with(['users','answers'])->paginate(1);
+
+
 
 //        dd($users);
         return view('pages.dashboard.exam.quiz', compact(['exam','quizzes']));

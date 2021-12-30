@@ -90,7 +90,7 @@
                                                     {{ getCreateAtInJalali($user['pivot']['created_at'])}}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('exams.show',$exam->id) }}">
+                                                    <a href="{{ route('exams.viewQuiz',[$exam->id,'user_id' => $user['id']]) }}">
                                                         <button
                                                             type="button"
                                                             class="btn"
@@ -116,8 +116,8 @@
 
                         </div>
 
-                        <div class="card">
-
+                        @if(auth()->user()->role === 'student')
+                            <div class="card">
                             <div class="card-body p-0">
                                 <div class="table-responsive">
                                     <table class="table text-center m-0">
@@ -147,11 +147,13 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                     </div>
 
                     <div class="col-md-4">
 
+                        @if(auth()->user()->role === 'student')
                         <div class="info-box">
                             <span class="info-box-icon bg-danger"><i class="fa fa-star-o"></i></span>
                             <div class="info-box-content">
@@ -159,6 +161,7 @@
                                 <span class="info-box-number">15 از 20</span>
                             </div>
                         </div>
+                        @endif
 
                         <div class="info-box bg-warning-gradient">
                             <span class="info-box-icon"><i class="fa fa-calendar"></i></span>
@@ -191,6 +194,7 @@
                             </div>
                         </div>
 
+                        @if(auth()->user()->role !== 'student')
                         <div class="card">
                             <div class="card-header">
                                 <h5 class="card-title">گزارش آزمون</h5>
@@ -237,7 +241,7 @@
                             </div>
 
                         </div>
-
+                        @endif
 
                     </div>
 
