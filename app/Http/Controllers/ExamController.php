@@ -221,5 +221,7 @@ class ExamController extends Controller
                 Session::forget("q$id");
             }
         }
+
+        return redirect()->route('exams.show',$exam->id);
     }
 }

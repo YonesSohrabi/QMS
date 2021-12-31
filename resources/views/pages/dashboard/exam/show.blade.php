@@ -55,8 +55,8 @@
                 <div class="row">
 
                     <div class="col-md-8">
-
-                        <div class="card">
+                        @if(auth()->user()->role !== 'student')
+                            <div class="card">
                             <div class="card-header border-transparent">
                                 <h3 class="card-title">لیست شرکت کنندگان</h3>
 
@@ -115,7 +115,7 @@
                             </div>
 
                         </div>
-
+                        @endif
                         @if(auth()->user()->role === 'student')
                             <div class="card">
                             <div class="card-body p-0">
