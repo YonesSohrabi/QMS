@@ -3,14 +3,6 @@
         ویرایش آزمونphp
     </x-slot>
     <x-slot name="styles">
-        <!-- daterange picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/daterangepicker/daterangepicker-bs3.css') }}">
-        <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/iCheck/all.css') }}">
-        <!-- Bootstrap Color Picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
-        <!-- Bootstrap time Picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/timepicker/bootstrap-timepicker.min.css') }}">
         <!-- Persian Data Picker -->
         <link rel="stylesheet" href="{{ asset('templete/dist/css/persian-datepicker.min.css') }}">
         <!-- Select2 -->
@@ -224,16 +216,6 @@
                                 سوالات اضافه شده به آزمون
                             </h3>
 
-                            <div class="card-tools">
-{{--                                {{ $users->links('vendor.pagination.tailwind') }}--}}
-{{--                                <ul class="pagination pagination-sm">--}}
-{{--                                    <li class="page-item"><a href="#" class="page-link">«</a></li>--}}
-{{--                                    <li class="page-item"><a href="#" class="page-link">۱</a></li>--}}
-{{--                                    <li class="page-item"><a href="#" class="page-link">۲</a></li>--}}
-{{--                                    <li class="page-item"><a href="#" class="page-link">۳</a></li>--}}
-{{--                                    <li class="page-item"><a href="#" class="page-link">»</a></li>--}}
-{{--                                </ul>--}}
-                            </div>
                         </div>
                         <div class="card-body">
                             <ul class="todo-list">
@@ -282,11 +264,6 @@
         <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.js') }}"></script>
         <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
         <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
-        <!-- date-range-picker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-        <script src="{{ asset('templete/plugins/daterangepicker/daterangepicker.js') }}"></script>
-        <!-- bootstrap color picker -->
-        <script src="{{ asset('templete/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
 
         <!-- Persian Data Picker -->
         <script src="{{ asset('templete/dist/js/persian-date.min.js') }}"></script>

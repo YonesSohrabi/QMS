@@ -3,18 +3,7 @@
         ویرایش کاربر
     </x-slot>
     <x-slot name="styles">
-        <!-- daterange picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/daterangepicker/daterangepicker-bs3.css') }}">
-        <!-- iCheck for checkboxes and radio inputs -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/iCheck/all.css') }}">
-        <!-- Bootstrap Color Picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/colorpicker/bootstrap-colorpicker.min.css') }}">
-        <!-- Bootstrap time Picker -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/timepicker/bootstrap-timepicker.min.css') }}">
-        <!-- Persian Data Picker -->
-        <link rel="stylesheet" href="{{ asset('templete/dist/css/persian-datepicker.min.css') }}">
-        <!-- Select2 -->
-        <link rel="stylesheet" href="{{ asset('templete/plugins/select2/select2.min.css') }}">
+
         <!-- bootstrap rtl -->
         <link rel="stylesheet" href="{{ asset('templete/dist/css/bootstrap-rtl.min.css') }}">
         <!-- template rtl version -->
@@ -35,7 +24,7 @@
                         </ol>
                     </div>
                 </div>
-            </div><!-- /.container-fluid -->
+            </div>
         </section>
 
         <!-- Main content -->
@@ -47,7 +36,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">اطلاعات کاربر</h3>
                             </div>
-                            <!-- /.card-header -->
+
                             <div class="card-body">
                                 @foreach($errors->all() as $er)
                                     <p>{{$er}}</p>
@@ -55,7 +44,7 @@
                                 <form action="{{ route('users.update', $user->id) }}" method="post" role="form">
                                 @csrf
                                 @method('PUT')
-                                <!-- text input -->
+
                                     <div class="d-flex">
                                         <div class="form-group col-6">
                                             <label>نام<span class="text-danger"> * </span></label>
@@ -67,7 +56,7 @@
                                             <input type="text" name="family" value="{{ $user->family }}" class="form-control" placeholder="نام خانوادگی کاربر مورد نظر را وارد کنید ...">
                                         </div>
                                     </div>
-                                    <!-- textarea -->
+
                                     <div class="form-group">
                                         <label>ایمیل <span class="text-danger"> * </span></label>
                                         <input type="text" name="email" value="{{ $user->email }}" class="form-control" placeholder="ایمیل مورد نظر را وارد کنید ...">
@@ -106,36 +95,21 @@
                                     <button class="btn btn-warning col-12">ویرایش کاربر</button>
                                 </form>
                             </div>
-                            <!-- /.card-body -->
+
                         </div>
-                        <!-- /.card -->
+
                     </div>
-                    <!--/.col (right) -->
+
                 </div>
-                <!-- /.row -->
-            </div><!-- /.container-fluid -->
+
+            </div>
         </section>
-        <!-- /.content -->
+
     </div>
 
     <x-slot name="script">
-
-        <!-- InputMask -->
-        <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.js') }}"></script>
-        <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.date.extensions.js') }}"></script>
-        <script src="{{ asset('templete/plugins/input-mask/jquery.inputmask.extensions.js') }}"></script>
-        <!-- date-range-picker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"></script>
-        <script src="{{ asset('templete/plugins/daterangepicker/daterangepicker.js') }}"></script>
-        <!-- bootstrap color picker -->
-        <script src="{{ asset('templete/plugins/colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-
-        <!-- Persian Data Picker -->
-        <script src="{{ asset('templete/dist/js/persian-date.min.js') }}"></script>
-        <script src="{{ asset('templete/dist/js/persian-datepicker.min.js') }}"></script>
         <!-- AdminLTE App -->
         <script src="{{ asset('templete/dist/js/adminlte.min.js') }}"></script>
-
 
     </x-slot>
 </x-dashboard-layout>
